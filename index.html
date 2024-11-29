@@ -7,497 +7,674 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <style>
-        /* Global Styles */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+</head>
 
-        body {
-            font-family: 'Google Sans', sans-serif;
-            overflow-x: hidden;
-        }
+<style>
+    /* Global Styles */
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
 
-        .custom-bg {
-            background: radial-gradient(circle at 55% -25%, #2E1A47 10%, #000 50%);
-            min-height: 100vh;
-            width: 100%;
-            color: #fff;
-        }
+    body {
+        font-family: 'Google Sans', sans-serif;
+        overflow-x: hidden;
+    }
 
-        /* Navbar Styles */
-        .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 10;
-            backdrop-filter: none;
-            background: transparent;
-            transition: backdrop-filter 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 3rem;
-        }
+    .custom-bg {
+        background: radial-gradient(circle at 55% -25%, #2E1A47 10%, #000 50%);
+        min-height: 100vh;
+        width: 100%;
+        color: #fff;
+    }
 
-        .navbar.scrolled {
-            backdrop-filter: blur(15px);
-            background: rgba(0, 0, 0, 0.7);
-            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
-        }
+    /* Navbar Styles */
+    .navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 10;
+        backdrop-filter: none;
+        background: transparent;
+        transition: backdrop-filter 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 3rem;
+    }
 
-        .navbar a {
-            font-size: 1rem;
-            font-weight: 400;
-            color: #9CA3AF;
-            margin: 0 1rem;
-            text-decoration: none;
-            transition: color 0.2s;
-        }
+    .navbar.scrolled {
+        backdrop-filter: blur(15px);
+        background: rgba(0, 0, 0, 0.7);
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+    }
 
-        .navbar a:hover {
-            color: #ffffff;
-        }
+    .navbar a {
+        font-size: 1rem;
+        font-weight: 400;
+        color: #9CA3AF;
+        margin: 0 1rem;
+        text-decoration: none;
+        transition: color 0.2s;
+    }
 
-        .navbar a.active {
-            color: #ffffff;
-            border-bottom: 2px solid #9F7AEA; /* Lavender equivalent */
-        }
+    .navbar a:hover {
+        color: #ffffff;
+    }
 
-        /* Hero Section */
-        .hero-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-end;
-            min-height: calc(100vh - 120px);
-            padding-bottom: 15vh;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 1s ease, transform 1s ease;
-            text-align: center;
-        }
+    .navbar a.active {
+        color: #ffffff;
+        border-bottom: 2px solid #9F7AEA; /* Lavender equivalent */
+    }
 
-        .hero-section.loaded {
-            opacity: 1;
-            transform: translateY(0);
-        }
+  /* Navbar Styles */
+  .navbar a.nav-link {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #9CA3AF;
+    margin: 0 1rem;
+    text-decoration: none;
+    position: relative;
+    transition: color 0.2s;
+  }
 
-        .title {
-            font-size: 6rem;
-            font-weight: 400;
-            line-height: 1.2;
-            color: #ffffff;
-            margin: 0;
-            opacity: 0;
-            transform: translateY(-20px);
-            animation: fadeIn 1s forwards;
-        }
+  .navbar a.nav-link:hover {
+    color: #ffffff;
+  }
 
-        .subtitle,
-        .button-container {
+  .navbar a.nav-link.active {
+    color: #ffffff;
+  }
+
+  /* Underline Animation */
+  .navbar nav {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar nav .underline {
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    height: 2px;
+    width: 0;
+    background: #9F7AEA; /* Lavender underline */
+    transition: all 0.3s ease-in-out;
+    border-radius: 1px;
+  }
+
+  .navbar a.nav-link.active ~ .underline {
+    left: 0;
+  }
+
+    /* Hero Section */
+    .hero-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        min-height: calc(100vh - 120px);
+        padding-bottom: 15vh;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 1s ease, transform 1s ease;
+        text-align: center;
+    }
+
+    .hero-section.loaded {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .title {
+        font-size: 6rem;
+        font-weight: 400;
+        line-height: 1.2;
+        color: #ffffff;
+        margin: 0;
+        opacity: 0;
+        transform: translateY(-20px);
+        animation: fadeIn 1s forwards;
+    }
+
+    .subtitle,
+    .button-container {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    .subtitle {
+        animation: fadeIn 1s 0.5s forwards;
+    }
+
+    .button-container {
+        animation: fadeIn 1s 0.7s forwards;
+        margin-top: 2rem;
+    }
+
+    .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.85rem 2.5rem;
+        border-radius: 14px;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: all 0.3s ease-in-out;
+        text-decoration: none;
+    }
+
+    .button-blue {
+        background: linear-gradient(to right, #B794F4, #9F7AEA); /* Lavender gradient */
+        color: white;
+        box-shadow: 0 4px 10px rgba(159, 122, 234, 0.3);
+    }
+
+    .button-blue:hover {
+        background: #9F7AEA;
+    }
+
+    .button-outline {
+        border: 1px solid #9CA3AF;
+        color: #9CA3AF;
+        background: transparent;
+    }
+
+    .button-outline:hover {
+        border-color: #ffffff;
+        color: #ffffff;
+    }
+
+    @keyframes fadeIn {
+        from {
             opacity: 0;
             transform: translateY(20px);
         }
-
-        .subtitle {
-            animation: fadeIn 1s 0.5s forwards;
-        }
-
-        .button-container {
-            animation: fadeIn 1s 0.7s forwards;
-            margin-top: 2rem;
-        }
-
-        .button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.85rem 2.5rem;
-            border-radius: 14px;
-            font-size: 1rem;
-            font-weight: 500;
-            transition: all 0.3s ease-in-out;
-            text-decoration: none;
-        }
-
-        .button-blue {
-            background: linear-gradient(to right, #B794F4, #9F7AEA); /* Lavender gradient */
-            color: white;
-            box-shadow: 0 4px 10px rgba(159, 122, 234, 0.3);
-        }
-
-        .button-blue:hover {
-            background: #9F7AEA;
-        }
-
-        .button-outline {
-            border: 1px solid #9CA3AF;
-            color: #9CA3AF;
-            background: transparent;
-        }
-
-        .button-outline:hover {
-            border-color: #ffffff;
-            color: #ffffff;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Lower Section */
-        .lower-section {
-            text-align: center;
-            padding: 4rem 2rem;
-            font-size: 2.25rem;
-            font-weight: 400;
-            max-width: 900px;
-            margin: 45vh auto 0 auto;
-            line-height: 1.6;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .lower-section span {
-            color: black;
-            opacity: 0.2;
-            transition: color 0.15s ease, opacity 0.15s ease;
-        }
-
-        .lower-section span.gray {
-            color: rgba(186, 162, 245, 0.5); /* Shadowed lavender effect */
-            opacity: 0.8;
-        }
-
-        .lower-section span.blue {
-            color: #D6BCFA; /* Softer lavender */
+        to {
             opacity: 1;
+            transform: translateY(0);
         }
+    }
 
-        /* Cards Container */
-        .cards-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 2rem;
-            margin: 0 auto;
-            flex-wrap: wrap;
-            max-width: 1200px;
-            padding: 0 2rem;
-        }
+    /* Lower Section */
+    .lower-section {
+        text-align: center;
+        padding: 4rem 2rem;
+        font-size: 2.25rem;
+        font-weight: 400;
+        max-width: 900px;
+        margin: 45vh auto 0 auto;
+        line-height: 1.6;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+    }
 
-        /* Card Styles */
-        .card-container {
-            position: relative;
-            width: 350px;
-            height: 420px;
-            background: linear-gradient(135deg, #2E1A47, #1A0A29); /* Dark lavender tones */
-            border-radius: 1rem;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-            perspective: 1200px;
-            transform-style: preserve-3d;
-            transition: transform 0.6s ease, box-shadow 0.6s ease;
-            cursor: pointer;
-        }
+    .lower-section span {
+        color: black;
+        opacity: 0.2;
+        transition: color 0.15s ease, opacity 0.15s ease;
+    }
 
-        .card-container:hover {
-            transform: rotateX(0deg) rotateY(0deg) scale(1.05);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
-        }
+    .lower-section span.gray {
+        color: rgba(186, 162, 245, 0.5); /* Shadowed lavender effect */
+        opacity: 0.8;
+    }
 
-        .card-container img {
-            position: absolute;
-            top: 20%;
-            left: 50%;
-            transform: translate(-50%, -50%) translateZ(50px);
-            width: 120px;
-            height: 120px;
-            z-index: 2;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 2px solid #ffffff;
-        }
+    .lower-section span.blue {
+        color: #D6BCFA; /* Softer lavender */
+        opacity: 1;
+    }
 
-        .card-container div.content {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            background: rgba(18, 18, 18, 0.9);
-            padding: 1rem;
-            text-align: left;
-            color: #fff;
-            transform: translateZ(20px);
-            z-index: 1;
-        }
+    /* Cards Container */
+    .cards-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        margin: 0 auto;
+        flex-wrap: wrap;
+        max-width: 1200px;
+        padding: 0 2rem;
+    }
 
-        .card-container h3 {
-            margin: 0 0 0.5rem 0;
-            font-size: 1.25rem;
-            font-weight: 600;
-        }
+    /* Card Styles */
+    .card-container {
+        position: relative;
+        width: 350px;
+        height: 420px;
+        background: linear-gradient(135deg, #2E1A47, #1A0A29); /* Dark lavender tones */
+        border-radius: 1rem;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+        perspective: 1200px;
+        transform-style: preserve-3d;
+        transition: transform 0.6s ease, box-shadow 0.6s ease;
+        cursor: pointer;
+    }
 
-        .card-container p {
-            margin: 0;
-            font-size: 0.9rem;
-            color: #a1a1a1;
-        }
+    .card-container:hover {
+        transform: rotateX(0deg) rotateY(0deg) scale(1.05);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+    }
 
-        .card-container .card-icon {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            font-size: 1rem;
-            color: #cfcfcf;
-            transition: color 0.3s ease;
-        }
+    .card-container img {
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        transform: translate(-50%, -50%) translateZ(50px);
+        width: 120px;
+        height: 120px;
+        z-index: 2;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 2px solid #ffffff;
+    }
 
-        .card-container:hover .card-icon {
-            color: #F3E8FF; /* Lighter lavender */
-        }
+    .card-container div.content {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        background: rgba(18, 18, 18, 0.9);
+        padding: 1rem;
+        text-align: left;
+        color: #fff;
+        transform: translateZ(20px);
+        z-index: 1;
+    }
 
-        /* Carousel Section */
-        #three-card-carousel {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            background-color: #000; /* Ensure background matches */
-        }
+    .card-container h3 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.25rem;
+        font-weight: 600;
+    }
 
-        /* Swiper Styles */
-        .swiper-container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            padding: 0 !important; /* Remove Swiper's internal padding */
-        }
+    .card-container p {
+        margin: 0;
+        font-size: 0.9rem;
+        color: #a1a1a1;
+    }
 
-        .swiper-slide {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-            position: relative;
-            width: auto; /* Let Swiper handle width based on slidesPerView */
-        }
+    .card-container .card-icon {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        font-size: 1rem;
+        color: #cfcfcf;
+        transition: color 0.3s ease;
+    }
 
+    .card-container:hover .card-icon {
+        color: #F3E8FF; /* Lighter lavender */
+    }
+
+    /* Carousel Section */
+    #three-card-carousel {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        background-color: #000; /* Ensure background matches */
+    }
+
+    /* Swiper Styles */
+    .swiper-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        padding: 0 !important; /* Remove Swiper's internal padding */
+    }
+
+    .swiper-slide {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        position: relative;
+        width: auto; /* Let Swiper handle width based on slidesPerView */
+    }
+
+    .card {
+        width: 500px;
+        height: 500px;
+        background-color: #f0f0f0;
+        border: 5px solid transparent;
+        border-radius: 25px; /* More rounded corners */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.5s ease;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        backface-visibility: hidden;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .card-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Changed from fill to cover */
+        display: block;
+        border-radius: 25px; /* Match card's rounded corners */
+    }
+
+    /* Description Styles */
+    .description {
+        margin-top: 20px;
+        font-size: 1.2rem;
+        color: #333;
+        opacity: 0; /* Hidden by default */
+        transition: opacity 0.3s ease;
+        text-align: center;
+        width: 500px;
+    }
+
+    /* Active (centered) slide */
+    .swiper-slide-active .card {
+        transform: scale(1) rotate(0deg) translateY(-20px); /* Slightly higher */
+        opacity: 1;
+        border-color: #9F7AEA; /* Highlight active card border */
+        z-index: 3;
+    }
+
+    .swiper-slide-active .description {
+        opacity: 1; /* Show description when active */
+        color: #fff; /* Ensure text is visible on dark background */
+    }
+
+    /* Previous slide */
+    .swiper-slide-prev .card {
+        transform: scale(0.85) rotate(-20deg) translateY(0px);
+        opacity: 0.7;
+        z-index: 2;
+    }
+
+    .swiper-slide-prev .description {
+        opacity: 0; /* Hide description when not active */
+    }
+
+    /* Next slide */
+    .swiper-slide-next .card {
+        transform: scale(0.85) rotate(20deg) translateY(0px);
+        opacity: 0.7;
+        z-index: 2;
+    }
+
+    .swiper-slide-next .description {
+        opacity: 0; /* Hide description when not active */
+    }
+
+    /* Other slides */
+    .swiper-slide:not(.swiper-slide-active):not(.swiper-slide-prev):not(.swiper-slide-next) .card {
+        transform: scale(0.5) translateY(100px);
+        opacity: 0.3;
+        z-index: 1;
+    }
+
+    /* Hover effect */
+    .card:hover {
+        border-color: #9B59B6; /* Darker blue on hover */
+        cursor: pointer;
+    }
+
+    /* Navigation Arrows */
+    .swiper-button-next,
+    .swiper-button-prev {
+        color: #000;
+        width: 60px;
+        height: 60px;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 50%;
+        top: 50%;
+        transform: translateY(-50%);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .swiper-button-next::after,
+    .swiper-button-prev::after {
+        font-size: 24px;
+    }
+
+    /* Inactive Pagination Bullets */
+    .swiper-pagination-bullet {
+        background: transparent; /* Make the inside of the dots transparent */
+        border: 2px solid #ffffff; /* White border for inactive dots */
+        width: 14px;
+        height: 14px;
+        border-radius: 50%; /* Ensure circular shape */
+        opacity: 0.7; /* Slightly dimmed */
+        transition: background 0.3s ease, opacity 0.3s ease;
+    }
+
+    /* Active Pagination Bullet */
+    .swiper-pagination-bullet-active {
+        background: #9F7AEA; /* Lavender fill for active dot */
+        border-color: #b499e9; /* Match border to the lavender color */
+        opacity: 1; /* Fully opaque */
+    }
+
+    /* Adjust Hover Effect on Pagination Dots */
+    .swiper-pagination-bullet:hover {
+        opacity: 1; /* Brighten inactive dots on hover */
+        background: rgba(159, 122, 234, 0.3); /* Slight lavender hover effect */
+    }
+
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
         .card {
-            width: 500px;
-            height: 500px;
-            background-color: #f0f0f0;
-            border: 5px solid transparent;
-            border-radius: 25px; /* More rounded corners */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.5s ease;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-            backface-visibility: hidden;
-            overflow: hidden;
-            position: relative;
+            width: 350px;
+            height: 350px;
         }
 
-        .card-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Changed from fill to cover */
-            display: block;
-            border-radius: 25px; /* Match card's rounded corners */
-        }
-
-        /* Description Styles */
         .description {
-            margin-top: 20px;
-            font-size: 1.2rem;
-            color: #333;
-            opacity: 0; /* Hidden by default */
-            transition: opacity 0.3s ease;
-            text-align: center;
-            width: 500px;
+            width: 350px;
+            font-size: 1rem;
         }
 
-        /* Active (centered) slide */
-        .swiper-slide-active .card {
-            transform: scale(1) rotate(0deg) translateY(-20px); /* Slightly higher */
-            opacity: 1;
-            border-color: #9F7AEA; /* Highlight active card border */
-            z-index: 3;
-        }
-
-        .swiper-slide-active .description {
-            opacity: 1; /* Show description when active */
-            color: #fff; /* Ensure text is visible on dark background */
-        }
-
-        /* Previous slide */
-        .swiper-slide-prev .card {
-            transform: scale(0.85) rotate(-20deg) translateY(0px);
-            opacity: 0.7;
-            z-index: 2;
-        }
-
-        .swiper-slide-prev .description {
-            opacity: 0; /* Hide description when not active */
-        }
-
-        /* Next slide */
-        .swiper-slide-next .card {
-            transform: scale(0.85) rotate(20deg) translateY(0px);
-            opacity: 0.7;
-            z-index: 2;
-        }
-
-        .swiper-slide-next .description {
-            opacity: 0; /* Hide description when not active */
-        }
-
-        /* Other slides */
-        .swiper-slide:not(.swiper-slide-active):not(.swiper-slide-prev):not(.swiper-slide-next) .card {
-            transform: scale(0.5) translateY(100px);
-            opacity: 0.3;
-            z-index: 1;
-        }
-
-        /* Hover effect */
-        .card:hover {
-            border-color: #9B59B6; /* Darker blue on hover */
-            cursor: pointer;
-        }
-
-        /* Navigation Arrows */
         .swiper-button-next,
         .swiper-button-prev {
-            color: #000;
-            width: 60px;
-            height: 60px;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 50%;
-            top: 50%;
-            transform: translateY(-50%);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            width: 50px;
+            height: 50px;
         }
 
         .swiper-button-next::after,
         .swiper-button-prev::after {
-            font-size: 24px;
+            font-size: 20px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .card {
+            width: 250px;
+            height: 250px;
         }
 
-        /* Inactive Pagination Bullets */
-        .swiper-pagination-bullet {
-            background: transparent; /* Make the inside of the dots transparent */
-            border: 2px solid #ffffff; /* White border for inactive dots */
-            width: 14px;
-            height: 14px;
-            border-radius: 50%; /* Ensure circular shape */
-            opacity: 0.7; /* Slightly dimmed */
-            transition: background 0.3s ease, opacity 0.3s ease;
+        .description {
+            width: 250px;
+            font-size: 0.9rem;
         }
 
-        /* Active Pagination Bullet */
-        .swiper-pagination-bullet-active {
-            background: #9F7AEA; /* Lavender fill for active dot */
-            border-color: #b499e9; /* Match border to the lavender color */
-            opacity: 1; /* Fully opaque */
+        .swiper-button-next,
+        .swiper-button-prev {
+            width: 40px;
+            height: 40px;
         }
 
-        /* Adjust Hover Effect on Pagination Dots */
-        .swiper-pagination-bullet:hover {
-            opacity: 1; /* Brighten inactive dots on hover */
-            background: rgba(159, 122, 234, 0.3); /* Slight lavender hover effect */
+        .swiper-button-next::after,
+        .swiper-button-prev::after {
+            font-size: 16px;
         }
+    }
+</style>
 
-
-        /* Responsive Adjustments */
-        @media (max-width: 768px) {
-            .card {
-                width: 350px;
-                height: 350px;
-            }
-
-            .description {
-                width: 350px;
-                font-size: 1rem;
-            }
-
-            .swiper-button-next,
-            .swiper-button-prev {
-                width: 50px;
-                height: 50px;
-            }
-
-            .swiper-button-next::after,
-            .swiper-button-prev::after {
-                font-size: 20px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .card {
-                width: 250px;
-                height: 250px;
-            }
-
-            .description {
-                width: 250px;
-                font-size: 0.9rem;
-            }
-
-            .swiper-button-next,
-            .swiper-button-prev {
-                width: 40px;
-                height: 40px;
-            }
-
-            .swiper-button-next::after,
-            .swiper-button-prev::after {
-                font-size: 16px;
-            }
-        }
-    </style>
-</head>
 <body class="custom-bg">
 
-    <!-- Navbar -->
+    <!--Navbar-->
     <header class="navbar flex justify-between items-center px-12 py-4">
-        <h1 class="text-lg font-medium">Firley</h1>
-        <nav class="flex">
-            <a href="#" class="active">Home</a>
-            <a href="#" class="hover:text-white">Firley models</a>
-            <a href="#" class="hover:text-white">Ultra</a>
-            <a href="#" class="hover:text-white">Pro</a>
-            <a href="#" class="hover:text-white">Nano</a>
+        <!-- Logo and Brand Name -->
+        <div class="flex items-center space-x-4">
+          <img
+            src="https://placehold.co/50x50"
+            alt="Firley Logo"
+            class="w-10 h-10 rounded-md object-cover"
+          />
+          <h1 class="text-lg font-medium">Firley</h1>
+        </div>
+      
+        <!-- Navigation Links -->
+        <nav class="relative flex">
+          <a href="#" class="nav-link active">Home</a>
+          <a href="/microlens.html" class="nav-link">Microlens</a>
+          <a href="/about-firley.html" class="nav-link">About Us</a>
+          <a href="/Updates.html" class="nav-link">Updates</a>
+          <a href="/Contact Us.html" class="nav-link">Contact Us</a>
+          <span class="underline"></span>
         </nav>
-    </header>
+      </header>      
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const links = document.querySelectorAll(".navbar a.nav-link");
+          const underline = document.querySelector(".navbar .underline");
+      
+          function setUnderline(target) {
+            const linkRect = target.getBoundingClientRect();
+            const navRect = target.parentElement.getBoundingClientRect();
+      
+            underline.style.width = `${linkRect.width}px`;
+            underline.style.left = `${linkRect.left - navRect.left}px`;
+          }
+      
+          links.forEach((link) => {
+            link.addEventListener("click", (e) => {
+              e.preventDefault();
+      
+              // Remove active class from other links
+              links.forEach((item) => item.classList.remove("active"));
+      
+              // Animate underline to the clicked link
+              setUnderline(link);
+      
+              // Wait for the animation to complete, then add the active class
+              setTimeout(() => {
+                link.classList.add("active");
+                // Navigate to the new page
+                window.location.href = link.getAttribute("href");
+              }, 300); // Match the transition duration (300ms)
+            });
+          });
+      
+          // Initialize the underline on page load for the active link
+          const activeLink = document.querySelector(".navbar a.nav-link.active");
+          if (activeLink) {
+            setUnderline(activeLink);
+          }
+        });
+    </script>
 
     <!-- Hero Section -->
     <main class="hero-section text-center" id="hero">
-        <h1 class="title">Microlens</h1>
-        <p class="subtitle">Lightweight models, two variants, both optimized for speed and efficiency</p>
-        <div class="button-container flex justify-center space-x-6 mt-8">
-            <a href="#" class="button button-blue">
-                Try the Free Microlens App &rarr;
-            </a>
-        </div>
+    <h1 class="title">Microlens</h1>
+    <p class="subtitle">
+      Lightweight models, two variants, both optimized for speed and efficiency
+    </p>
+    <div class="button-container flex justify-center space-x-6 mt-8">
+      <a href="#" class="button button-blue mind-blow-hover">
+        Try the Free Microlens App &rarr;
+      </a>
+    </div>
     </main>
-
+  
+    <style>
+        /* Base Button Styling */
+        .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.85rem 2.5rem;
+        border-radius: 14px;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: all 0.3s ease-in-out;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        }
+    
+        .button-blue {
+        color: white;
+        background: linear-gradient(to right, #9f7aea, #6b46c1); /* Base lavender gradient */
+        box-shadow: 0 4px 10px rgba(159, 122, 234, 0.5);
+        }
+    
+        /* Mind-blowing Hover Effect */
+        .mind-blow-hover {
+        background: linear-gradient(45deg, #6b46c1, #9f7aea, #3b82f6, #60a5fa);
+        background-size: 300% 300%; /* Oversized gradient for animation */
+        color: white;
+        box-shadow: 0 4px 10px rgba(159, 122, 234, 0.5);
+        transition: all 0.5s ease;
+        }
+    
+        .mind-blow-hover:hover {
+        animation: gradient-shift 2s infinite ease-in-out; /* Gradient shift */
+        background-position: 100% 0; /* Change background position on hover */
+        transform: scale(1.05) rotateX(5deg); /* Subtle 3D pop */
+        box-shadow: 0 10px 20px rgba(59, 130, 246, 0.8); /* Glow effect */
+        border: 2px solid #ffffff; /* Highlight the button */
+        }
+    
+        /* After-effect Rippling */
+        .mind-blow-hover:hover::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 150%;
+        height: 150%;
+        background: rgba(255, 255, 255, 0.1);
+        transform: translate(-50%, -50%) scale(1);
+        border-radius: 50%;
+        opacity: 0;
+        animation: ripple 1s ease-out forwards;
+        z-index: -1;
+        }
+    
+        /* Gradient animation */
+        @keyframes gradient-shift {
+        0% {
+            background-position: 0% 0%;
+        }
+        50% {
+            background-position: 50% 100%;
+        }
+        100% {
+            background-position: 0% 0%;
+        }
+        }
+    
+        /* Ripple animation */
+        @keyframes ripple {
+        0% {
+            transform: translate(-50%, -50%) scale(0.5);
+            opacity: 0.8;
+        }
+        100% {
+            transform: translate(-50%, -50%) scale(3);
+            opacity: 0;
+        }
+        }
+    </style>
+  
     <!-- Lower Text Section -->
     <section class="lower-section" id="lowerText">
         <span>Lightweight,</span>
@@ -522,7 +699,7 @@
         <span>tokens.</span>
     </section>
 
-    <!-- Demo Section -->
+    <!-- Demo Header -->
     <section style="padding: 4rem 2rem; color: #fff; text-align: center; margin-top: 15vh">
         <h3 style="font-size: 1rem; font-weight: 400; color: #a1a1a1; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1rem;">
             Demo
@@ -1140,6 +1317,7 @@
         </script>
     </section>   
 
+    <!-- Small smaller-->
     <section style="padding: 4rem 2rem; text-align: center; margin-top: 15vh;">
         <h2 style="font-size: 2rem; font-weight: 500; margin-bottom: 1rem; color: #fff;">Small, smaller</h2>
         <p style="font-size: 1rem; font-weight: 400; color: #a1a1a1; margin-bottom: 4rem;">
@@ -1260,59 +1438,59 @@
         </div>
     </section> 
 
+    <!--About Firley section-->
     <section
-  class="bg-black min-h-screen flex flex-col items-center justify-center text-white font-sans mt-[30vh]"
->
-  <!-- Header and Description -->
-  <div class="text-center px-6 max-w-3xl">
-    <h1
-      class="text-[48px] font-medium leading-tight mb-6"
-      style="font-family: 'Google Sans', sans-serif; font-weight: 500;"
-    >
-      Longer context
-    </h1>
-    <p
-      class="text-[16px] leading-relaxed text-gray-400"
-      style="font-family: 'Google Sans', sans-serif; font-weight: 400;"
-    >
-      Flash models have a one-million-token context window by default, which
-      means you can process one hour of video, 11 hours of audio, codebases
-      with more than 30,000 lines of code, or over 700,000 words.
-    </p>
-  </div>
-
-  <!-- Image -->
-  <div class="mt-10 w-full max-w-4xl px-4">
-    <img
-      src="https://placehold.co/1200x600"
-      alt="A grid of glowing blue keys with various icons representing different functionalities, glowing against a black background"
-      class="rounded-lg"
-    />
-  </div>
-
-  <!-- Button -->
-  <button
-    class="mt-10 text-lg font-medium px-8 py-3 rounded-full shadow-md flex items-center justify-center transition focus:ring-4 focus:ring-blue-300"
-    style="background: linear-gradient(to right, #1E40AF, #2563EB); font-family: 'Google Sans', sans-serif;"
+    class="bg-black min-h-screen flex flex-col items-center justify-center text-white font-sans mt-[30vh]"
   >
-    <span>Build with Flash</span>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      class="h-5 w-5 ml-2"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M13 7l5 5m0 0l-5 5m5-5H6"
+    <!-- Header and Description -->
+    <div class="text-center px-6 max-w-3xl">
+      <h1
+        class="text-[48px] font-medium leading-tight mb-6"
+        style="font-family: 'Google Sans', sans-serif; font-weight: 500;"
+      >
+        Longer context
+      </h1>
+      <p
+        class="text-[16px] leading-relaxed text-gray-400"
+        style="font-family: 'Google Sans', sans-serif; font-weight: 400;"
+      >
+        Flash models have a one-million-token context window by default, which
+        means you can process one hour of video, 11 hours of audio, codebases
+        with more than 30,000 lines of code, or over 700,000 words.
+      </p>
+    </div>
+  
+    <!-- Image -->
+    <div class="mt-10 w-full max-w-4xl px-4">
+      <img
+        src="https://placehold.co/1200x600"
+        alt="A grid of glowing blue keys with various icons representing different functionalities, glowing against a black background"
+        class="rounded-lg"
       />
-    </svg>
-  </button>
-</section>
-
+    </div>
+  
+    <!-- Button -->
+    <button
+      class="mt-10 text-lg font-medium px-8 py-3 rounded-full shadow-md flex items-center justify-center transition focus:ring-4 focus:ring-purple-300 hover:scale-105"
+      style="background: linear-gradient(to right, #9F7AEA, #6B46C1); font-family: 'Google Sans', sans-serif; color: white; box-shadow: 0 4px 10px rgba(159, 122, 234, 0.5);"
+    >
+      <span>Build with Flash</span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5 ml-2"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M13 7l5 5m0 0l-5 5m5-5H6"
+        />
+      </svg>
+    </button>
+    </section>
  
     <!-- Additional Scripts -->
     <script>
@@ -1352,4 +1530,5 @@
         });
     </script>
 </body>
+
 </html>
