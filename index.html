@@ -338,7 +338,7 @@
         .swiper-slide-active .card {
             transform: scale(1) rotate(0deg) translateY(-20px); /* Slightly higher */
             opacity: 1;
-            border-color: #007BFF; /* Highlight active card border */
+            border-color: #9F7AEA; /* Highlight active card border */
             z-index: 3;
         }
 
@@ -378,7 +378,7 @@
 
         /* Hover effect */
         .card:hover {
-            border-color: #0056b3; /* Darker blue on hover */
+            border-color: #9B59B6; /* Darker blue on hover */
             cursor: pointer;
         }
 
@@ -400,19 +400,30 @@
             font-size: 24px;
         }
 
-        /* Pagination Dots */
+        /* Inactive Pagination Bullets */
         .swiper-pagination-bullet {
-            background: #000;
-            opacity: 0.7;
+            background: transparent; /* Make the inside of the dots transparent */
+            border: 2px solid #ffffff; /* White border for inactive dots */
             width: 14px;
             height: 14px;
-            margin: 0 6px !important;
+            border-radius: 50%; /* Ensure circular shape */
+            opacity: 0.7; /* Slightly dimmed */
+            transition: background 0.3s ease, opacity 0.3s ease;
         }
 
+        /* Active Pagination Bullet */
         .swiper-pagination-bullet-active {
-            background: #000;
-            opacity: 1;
+            background: #9F7AEA; /* Lavender fill for active dot */
+            border-color: #b499e9; /* Match border to the lavender color */
+            opacity: 1; /* Fully opaque */
         }
+
+        /* Adjust Hover Effect on Pagination Dots */
+        .swiper-pagination-bullet:hover {
+            opacity: 1; /* Brighten inactive dots on hover */
+            background: rgba(159, 122, 234, 0.3); /* Slight lavender hover effect */
+        }
+
 
         /* Responsive Adjustments */
         @media (max-width: 768px) {
@@ -511,6 +522,624 @@
         <span>tokens.</span>
     </section>
 
+    <!-- Demo Section -->
+    <section style="padding: 4rem 2rem; color: #fff; text-align: center; margin-top: 15vh">
+        <h3 style="font-size: 1rem; font-weight: 400; color: #a1a1a1; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1rem;">
+            Demo
+        </h3>
+        <h2 style="font-size: 3rem; font-weight: 500; margin-bottom: 1.5rem; color: #fff;">
+            Longer context
+        </h2>
+        <p style="font-size: 1rem; font-weight: 400; line-height: 1.75; color: #a1a1a1; max-width: 800px; margin: 0 auto;">
+            1.5 Pro introduces a breakthrough context window of up to two million tokens — the longest context window of any large-scale foundation model yet. It achieves near-perfect recall on long-context retrieval tasks across modalities, unlocking the ability to accurately process large-scale documents, thousands of lines of code, hours of audio, video, and more.
+        </p>
+    </section>
+
+    <!-- Full-Screen Centered Three-Card Carousel Section -->
+    <section id="three-card-carousel">
+        <!-- Swiper CSS -->
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/swiper@9/swiper-bundle.min.css"
+        />
+    
+        <!-- Carousel Container -->
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <!-- Slide 1 -->
+                <div class="swiper-slide">
+                    <div class="card">
+                        <img src="images/segment1.png" alt="bloodSmear" class="card-image">
+                    </div>
+                    <p class="description">Human Blood Smear</p>
+                </div>
+                <!-- Slide 2 -->
+                <div class="swiper-slide">
+                    <div class="card">
+                        <img src="images/segment2.png" alt="anotherImage" class="card-image">
+                    </div>
+                    <p class="description">Plant Cell - Zea Seed</p>
+                </div>
+                <!-- Slide 3 -->
+                <div class="swiper-slide">
+                    <div class="card">
+                        <img src="images/segment3.png" alt="thirdImage" class="card-image">
+                    </div>
+                    <p class="description">Small Intestine Cell</p>
+                </div>
+            </div>
+            <!-- Navigation Arrows -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <!-- Pagination Dots -->
+            <div class="swiper-pagination"></div>
+        </div>
+    
+        <!-- Modal for Interaction -->
+        <div id="modal" class="modal">
+            <!-- Close Button -->
+            <div class="close-button" onclick="closeModal()">
+                &times;
+            </div>
+            <div class="modal-content">
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <!-- Image Section -->
+                    <div class="modal-image-container">
+                        <img id="modal-image" src="" alt="Segmented Image" class="modal-image">
+                    </div>
+                    <!-- Cards Section -->
+                    <div class="cards-section">
+                        <!-- Loading Overlay -->
+                        <div class="loading-overlay" id="loadingOverlay">
+                            <div class="loading-card">
+                                <!-- Shimmer effect -->
+                                <div class="shimmer"></div>
+                            </div>
+                        </div>
+                        <!-- Cards Container -->
+                        <div class="cards-container" id="cardsContainer">
+                            <!-- Cards will be generated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Swiper JS -->
+        <script src="https://unpkg.com/swiper@9/swiper-bundle.min.js"></script>
+    
+        <!-- Styles -->
+        <style>
+            /* Swiper Container */
+            .swiper-container {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+            }
+    
+            .swiper-slide {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: transform 0.3s ease, opacity 0.3s ease;
+                position: relative;
+                width: auto;
+                pointer-events: none; /* Disable pointer events by default */
+            }
+    
+            /* Enable pointer events only on active slide */
+            .swiper-slide-active {
+                pointer-events: auto;
+            }
+    
+            /* Card Styles */
+            .card {
+                width: 500px;
+                height: 500px;
+                background-color: #f0f0f0;
+                border: 5px solid transparent;
+                border-radius: 25px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.5s ease;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+                overflow: hidden;
+            }
+    
+            .card-image {
+                width: 110%;
+                height: 110%;
+                object-fit: cover;
+                border-radius: 0px;
+                cursor: pointer; /* Indicate clickable */
+            }
+    
+            /* Description Styles */
+            .description {
+                margin-top: 20px;
+                font-size: 1.2rem;
+                color: #333;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                text-align: center;
+                width: 500px;
+            }
+    
+            .swiper-slide-active .card {
+                transform: scale(1) translateY(-20px);
+                opacity: 1;
+                border-color: #9B59B6  ;
+            }
+    
+            .swiper-slide-active .description {
+                opacity: 1;
+                color: #fff;
+            }
+    
+            /* Navigation Arrows */
+            .swiper-button-next,
+            .swiper-button-prev {
+                color: #000;
+                width: 60px;
+                height: 60px;
+                background: rgba(255, 255, 255, 0.8);
+                border-radius: 50%;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            }
+    
+            /* Modal Styles */
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1000;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                /* Frosted Glass Effect */
+                background-color: rgba(255, 255, 255, 0.2);
+                backdrop-filter: blur(10px);
+                overflow-y: auto; /* Enable scrolling if content exceeds modal height */
+            }
+    
+            .modal-content {
+                margin: 5% auto;
+                padding: 20px;
+                width: 90%;
+                max-width: 1200px;
+                background-color: rgba(255, 255, 255, 0.1);
+                color: #333;
+                border-radius: 10px;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                backdrop-filter: blur(10px);
+            }
+    
+            /* Close Button */
+            .close-button {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                background-color: white;
+                color: #333;
+                border-radius: 50%;
+                font-size: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                z-index: 1001;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            }
+    
+            /* Modal Body */
+            .modal-body {
+                display: flex;
+                width: 100%;
+                max-width: 1000px;
+            }
+    
+            .modal-image-container {
+                flex: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding-right: 20px;
+            }
+    
+            .modal-image {
+                max-width: 100%;
+                max-height: 80vh;
+                border: 2px solid #ccc;
+                border-radius: 10px;
+            }
+    
+            .cards-section {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                position: relative;
+                overflow: hidden;
+            }
+    
+            /* Loading Overlay Styling */
+            .loading-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: rgba(255,255,255,0.1);
+                z-index: 2;
+            }
+    
+            .loading-card {
+                width: 80%;
+                height: 200px;
+                background-color: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+                position: relative;
+            }
+    
+            /* Shimmer Effect */
+            .shimmer {
+                width: 50%;
+                height: 100%;
+                background: linear-gradient(90deg, rgba(224,224,224,0) 0%, rgba(255,255,255,0.5) 50%, rgba(224,224,224,0) 100%);
+                position: absolute;
+                top: 0;
+                left: -50%;
+                animation: shimmer 2s infinite;
+            }
+    
+            @keyframes shimmer {
+                0% {
+                    left: -50%;
+                }
+                100% {
+                    left: 150%;
+                }
+            }
+    
+            /* Cards Container Styling */
+            .cards-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                gap: 20px;
+                opacity: 0;
+                transform: translateY(50px);
+                transition: opacity 1s ease, transform 1s ease;
+                z-index: 1;
+                width: 100%;
+                padding-top: 20px;
+            }
+    
+            .cards-container.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+    
+            /* Individual Card Styling */
+            .info-card {
+                width: 80%;
+                max-width: 400px;
+                padding: 20px;
+                border-radius: 10px;
+                color: #ffffff;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                opacity: 0;
+                transform: translateY(20px);
+                animation: cardEntrance 0.8s forwards;
+                transform-origin: bottom;
+                perspective: 1000px;
+            }
+    
+            /* Enhanced animation for Cards */
+            @keyframes cardEntrance {
+                0% {
+                    opacity: 0;
+                    transform: translateY(50px) scale(0.95) rotateX(30deg);
+                }
+                100% {
+                    opacity: 1;
+                    transform: translateY(0) scale(1) rotateX(0deg);
+                }
+            }
+    
+            /* Delay for Each Card Animation */
+            .info-card:nth-child(1) {
+                animation-delay: 0.5s;
+            }
+    
+            .info-card:nth-child(2) {
+                animation-delay: 0.8s;
+            }
+    
+            .info-card:nth-child(3) {
+                animation-delay: 1.1s;
+            }
+    
+            /* Responsive Design */
+            @media (max-width: 768px) {
+                .modal-body {
+                    flex-direction: column;
+                    align-items: center;
+                }
+                .modal-image-container {
+                    padding-right: 0;
+                    margin-bottom: 20px;
+                }
+                .cards-section {
+                    width: 100%;
+                }
+                .info-card {
+                    width: 90%;
+                }
+                .modal-image {
+                    max-height: 50vh;
+                }
+            }
+        </style>
+    
+        <!-- JavaScript -->
+        <script>
+            // AI Responses for each image
+            const aiResponsesMap = {
+                bloodSmear: [
+                    {
+                        title: "Red Blood Cells",
+                        content: "The bright red dots are red blood cells. They carry oxygen all around our body!",
+                        backgroundColor: "#e74c3c"
+                    },
+                    {
+                        title: "White Blood Cells",
+                        content: "The green areas indicate white blood cells. They are the defenders of our body, ready to fight off infections!",
+                        backgroundColor: "#27ae60"
+                    },
+                    {
+                        title: "Platelets",
+                        content: "The blue outlines highlight platelets. These are like band-aids inside your body, helping to stop bleeding!",
+                        backgroundColor: "#2980b9"
+                    }
+                ],
+                anotherImage: [
+                {
+                        title: "Cell Wall",
+                        content: "The light green rectangles you see are cell walls. They're like the sturdy walls of a castle that protect and give shape to the plant cell.",
+                        backgroundColor: "#1b6254"
+                    },
+                    {
+                        title: "Cytoplasm",
+                        content: "Inside each cell wall is the cytoplasm, which appears as a pale, slightly darker green area. This is like a jelly that fills the space inside the cell and cushions all the cell’s parts.",
+                        backgroundColor: "#8bc4be"
+                    },
+                    {
+                        title: "Nucleus",
+                        content: "In some of the cells, you might spot the nucleus. It's like the command center of the cell, telling it how to grow and divide. It’s tricky to spot here, though!",
+                        backgroundColor: "#daba05"
+                    }
+                ],
+                thirdImage: [
+                {
+                        title: "Epithelial Tissue",
+                        content: "The pink background is the epithelial tissue. This layer helps in absorbing nutrients from the food we eat. Imagine it's like a sponge soaking up all the good stuff!",
+                        backgroundColor: "#db5c9f"
+                    },
+                    {
+                        title: "Villi",
+                        content: "The green parts look like the villi. These tiny, finger-like projections help absorb nutrients from the food you eat. Imagine them reaching out to grab the vitamins and minerals you need!",
+                        backgroundColor: "#44984a"
+                    },
+                    {
+                        title: "Blood Vessels",
+                        content: "The red dots are likely blood vessels. These carry the absorbed nutrients throughout the body, fueling all our cells just like a delivery truck.",
+                        backgroundColor: "#ce6f73"
+                    },
+                    {
+                        title: "Lumen",
+                        content: "The white spaces are the lumen of the intestine, where the food passes through as it gets broken down further.",
+                        backgroundColor: "#c1c2c4"
+                    },
+                ]
+            };
+    
+            // Open Modal
+            function openModal(imageKey) {
+                const modal = document.getElementById("modal");
+                const loadingOverlay = document.getElementById('loadingOverlay');
+                const cardsContainer = document.getElementById('cardsContainer');
+                const modalImage = document.getElementById("modal-image");
+    
+                // Set the image source based on imageKey
+                const imageSrcMap = {
+                    bloodSmear: 'images/segment1.png',
+                    anotherImage: 'images/segment2.png',
+                    thirdImage: 'images/segment3.png'
+                };
+    
+                modalImage.src = imageSrcMap[imageKey];
+    
+                // Clear previous cards
+                cardsContainer.innerHTML = '';
+    
+                modal.style.display = "block";
+    
+                // Simulate AI processing time (e.g., 2 seconds)
+                setTimeout(() => {
+                    // Hide Loading Overlay
+                    loadingOverlay.style.opacity = '0';
+                    setTimeout(() => {
+                        loadingOverlay.style.display = 'none';
+                    }, 500);
+    
+                    // Generate cards based on AI responses
+                    const responses = aiResponsesMap[imageKey];
+                    responses.forEach((response, index) => {
+                        const card = document.createElement('div');
+                        card.classList.add('info-card');
+                        card.style.backgroundColor = response.backgroundColor;
+                        card.style.animationDelay = `${0.5 + index * 0.3}s`; // Stagger animations
+    
+                        const title = document.createElement('h3');
+                        title.textContent = response.title;
+                        title.style.color = '#fff';
+    
+                        const content = document.createElement('p');
+                        content.textContent = response.content;
+                        content.style.color = '#fff';
+    
+                        card.appendChild(title);
+                        card.appendChild(content);
+    
+                        cardsContainer.appendChild(card);
+                    });
+    
+                    // Reveal Cards Container
+                    cardsContainer.classList.add('visible');
+                }, 2000); // 2000 milliseconds = 2 seconds
+            }
+    
+            // Close Modal
+            function closeModal() {
+                const modal = document.getElementById("modal");
+                const loadingOverlay = document.getElementById('loadingOverlay');
+                const cardsContainer = document.getElementById('cardsContainer');
+    
+                modal.style.display = "none";
+    
+                // Reset Loading Overlay and Cards Container
+                loadingOverlay.style.display = 'flex';
+                loadingOverlay.style.opacity = '1';
+                cardsContainer.classList.remove('visible');
+                cardsContainer.innerHTML = '';
+            }
+    
+            // Close modal when clicking outside the modal content
+            window.addEventListener('click', function(event) {
+                const modal = document.getElementById("modal");
+                const modalContent = document.querySelector(".modal-content");
+                if (event.target == modal) {
+                    closeModal();
+                }
+            });
+    
+            // Carousel Initialization Script
+            document.addEventListener('DOMContentLoaded', function () {
+                const swiper = new Swiper('.swiper-container', {
+                    // Basic Swiper parameters
+                    initialSlide: 1, // Start from the middle slide
+                    slidesPerView: 3,
+                    centeredSlides: true,
+                    spaceBetween: 150, // Increased spacing for better arch effect
+                    loop: false,
+                    resistance: true,
+                    grabCursor: true,
+                    allowTouchMove: true,
+    
+                    // Keyboard control
+                    keyboard: {
+                        enabled: true,
+                        onlyInViewport: true,
+                    },
+    
+                    // Pagination (dots)
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
+                    },
+    
+                    // Navigation arrows
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+    
+                    // Transition speed
+                    speed: 600,
+    
+                    // Breakpoints for responsiveness
+                    breakpoints: {
+                        0: {
+                            slidesPerView: 1,
+                            spaceBetween: 50,
+                        },
+                        768: {
+                            slidesPerView: 3,
+                            spaceBetween: 150,
+                        },
+                    },
+    
+                    // Enable smooth resistance when dragging
+                    resistanceRatio: 0.85,
+    
+                    // Event listeners to handle description visibility
+                    on: {
+                        slideChangeTransitionStart: function () {
+                            updateDescriptions();
+                        },
+                        slideChangeTransitionEnd: function () {
+                            updateDescriptions();
+                        },
+                    },
+                });
+    
+                // Function to update descriptions based on active slide
+                function updateDescriptions() {
+                    const slides = document.querySelectorAll('.swiper-slide');
+                    slides.forEach((slide) => {
+                        const description = slide.querySelector('.description');
+                        if (slide.classList.contains('swiper-slide-active')) {
+                            description.style.opacity = '1';
+                            description.style.color = '#fff'; // Ensure visibility on dark background
+                            // Enable pointer events on active slide
+                            slide.style.pointerEvents = 'auto';
+                            // Add click event to active slide's image
+                            const cardImage = slide.querySelector('.card-image');
+                            cardImage.onclick = function() {
+                                const imageKey = cardImage.alt;
+                                openModal(imageKey);
+                            };
+                        } else {
+                            description.style.opacity = '0';
+                            description.style.color = '#333';
+                            // Disable pointer events on inactive slides
+                            slide.style.pointerEvents = 'none';
+                            // Remove click event from inactive slides
+                            const cardImage = slide.querySelector('.card-image');
+                            cardImage.onclick = null;
+                        }
+                    });
+                }
+    
+                // Initial call to set descriptions correctly
+                updateDescriptions();
+    
+                // Optional: Adjust Swiper on window resize
+                window.addEventListener('resize', () => {
+                    swiper.update();
+                });
+            });
+    
+        </script>
+    </section>   
+
     <section style="padding: 4rem 2rem; text-align: center; margin-top: 15vh;">
         <h2 style="font-size: 2rem; font-weight: 500; margin-bottom: 1rem; color: #fff;">Small, smaller</h2>
         <p style="font-size: 1rem; font-weight: 400; color: #a1a1a1; margin-bottom: 4rem;">
@@ -596,7 +1225,7 @@
     </section>
 
     <!-- Performance Section -->
-    <section style="padding: 6rem 2rem; background-color: #000; color: #fff; text-align: center; margin-top: 30vh;">
+    <section style="padding: 6rem 2rem; background-color: #000; color: #fff; text-align: center; margin-top: 15vh;">
         <h2 style="font-size: 2.5rem; font-weight: 500; margin-bottom: 1rem;">Performance in a flash</h2>
         <p style="font-size: 1rem; font-weight: 400; color: #a1a1a1; margin-bottom: 4rem;">
             Designed to be fast and efficient to serve at scale.
@@ -604,7 +1233,7 @@
         <div style="display: flex; justify-content: center; gap: 2.5rem; flex-wrap: wrap; max-width: 1200px; margin: 0 auto;">
             <!-- Card 1 -->
             <div style="background-color: #161616; border-radius: 1rem; border: 1px solid #333; padding: 2.5rem; flex: 1; min-width: 280px; max-width: 360px; text-align: center; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);">
-                <img src="https://placehold.co/80x80/2563EB/FFFFFF?text=Speed" alt="Built for speed icon" style="display: block; margin: 0 auto 1.5rem;">
+                <img src="https://placehold.co/80x80/8A2BE2/FFFFFF?text=Speed" alt="Built for speed icon" style="display: block; margin: 0 auto 1.5rem;">
                 <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem;">Built for speed</h3>
                 <p style="font-size: 0.95rem; font-weight: 400; color: #cfcfcf; line-height: 1.5;">
                     Sub-second average first-token latency for the vast majority of developer and enterprise use cases.
@@ -613,7 +1242,7 @@
 
             <!-- Card 2 -->
             <div style="background-color: #161616; border-radius: 1rem; border: 1px solid #333; padding: 2.5rem; flex: 1; min-width: 280px; max-width: 360px; text-align: center; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);">
-                <img src="https://placehold.co/80x80/2563EB/FFFFFF?text=Quality" alt="Quality at lower cost icon" style="display: block; margin: 0 auto 1.5rem;">
+                <img src="https://placehold.co/80x80/8A2BE2/FFFFFF?text=Quality" alt="Quality at lower cost icon" style="display: block; margin: 0 auto 1.5rem;">
                 <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem;">Quality at lower cost</h3>
                 <p style="font-size: 0.95rem; font-weight: 400; color: #cfcfcf; line-height: 1.5;">
                     On most common tasks, 1.5 Flash models achieve comparable quality to larger models, at a fraction of the cost.
@@ -622,412 +1251,69 @@
 
             <!-- Card 3 -->
             <div style="background-color: #161616; border-radius: 1rem; border: 1px solid #333; padding: 2.5rem; flex: 1; min-width: 280px; max-width: 360px; text-align: center; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);">
-                <img src="https://placehold.co/80x80/2563EB/FFFFFF?text=Context" alt="Long-context understanding icon" style="display: block; margin: 0 auto 1.5rem;">
+                <img src="https://placehold.co/80x80/8A2BE2/FFFFFF?text=Context" alt="Long-context understanding icon" style="display: block; margin: 0 auto 1.5rem;">
                 <h3 style="font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem;">Long-context understanding</h3>
                 <p style="font-size: 0.95rem; font-weight: 400; color: #cfcfcf; line-height: 1.5;">
                     Process hours of video and audio, and hundreds of thousands of words or lines of code.
                 </p>
             </div>
         </div>
-    </section>
+    </section> 
 
-    <!-- Demo Section -->
-    <section style="padding: 4rem 2rem; background-color: #000; color: #fff; text-align: center;">
-        <h3 style="font-size: 1rem; font-weight: 400; color: #a1a1a1; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1rem;">
-            Demo
-        </h3>
-        <h2 style="font-size: 3rem; font-weight: 500; margin-bottom: 1.5rem; color: #fff;">
-            Longer context
-        </h2>
-        <p style="font-size: 1rem; font-weight: 400; line-height: 1.75; color: #a1a1a1; max-width: 800px; margin: 0 auto;">
-            1.5 Pro introduces a breakthrough context window of up to two million tokens — the longest context window of any large-scale foundation model yet. It achieves near-perfect recall on long-context retrieval tasks across modalities, unlocking the ability to accurately process large-scale documents, thousands of lines of code, hours of audio, video, and more.
-        </p>
-    </section>
+    <section
+  class="bg-black min-h-screen flex flex-col items-center justify-center text-white font-sans mt-[30vh]"
+>
+  <!-- Header and Description -->
+  <div class="text-center px-6 max-w-3xl">
+    <h1
+      class="text-[48px] font-medium leading-tight mb-6"
+      style="font-family: 'Google Sans', sans-serif; font-weight: 500;"
+    >
+      Longer context
+    </h1>
+    <p
+      class="text-[16px] leading-relaxed text-gray-400"
+      style="font-family: 'Google Sans', sans-serif; font-weight: 400;"
+    >
+      Flash models have a one-million-token context window by default, which
+      means you can process one hour of video, 11 hours of audio, codebases
+      with more than 30,000 lines of code, or over 700,000 words.
+    </p>
+  </div>
 
-    <!-- Full-Screen Centered Three-Card Carousel Section -->
-    <section id="three-card-carousel">
-        <!-- Swiper CSS -->
-        <link
-            rel="stylesheet"
-            href="https://unpkg.com/swiper@9/swiper-bundle.min.css"
-        />
-    
-        <!-- Carousel Container -->
-        <div class="swiper-container">
-            <div class="swiper-wrapper">
-                <!-- Slide 1 -->
-                <div class="swiper-slide">
-                    <div class="card">
-                        <img src="images/segment1.png" alt="Segmented Blood Smear" class="card-image" onclick="openModal('images/segment1.png', 'bloodSmear')">
-                    </div>
-                    <p class="description">Segmented Blood Smear</p>
-                </div>
-                <!-- Slide 2 -->
-                <div class="swiper-slide">
-                    <div class="card">
-                        <img src="images/image2.png" alt="Image 2" class="card-image" onclick="openModal('images/image2.png', 'anotherImage')">
-                    </div>
-                    <p class="description">Image 2 Description</p>
-                </div>
-                <!-- Slide 3 -->
-                <div class="swiper-slide">
-                    <div class="card">
-                        <img src="images/image3.png" alt="Image 3" class="card-image" onclick="openModal('images/image3.png', 'thirdImage')">
-                    </div>
-                    <p class="description">Image 3 Description</p>
-                </div>
-            </div>
-            <!-- Navigation Arrows -->
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-            <!-- Pagination Dots -->
-            <div class="swiper-pagination"></div>
-        </div>
-    
-        <!-- Modal for Interaction -->
-        <div id="modal" class="modal">
-            <div class="modal-content">
-                <span class="close" onclick="closeModal()">&times;</span>
-                <img id="modal-image" src="" alt="Segmented Image" class="modal-image">
-                <p id="ai-response" class="ai-response">Hover over a highlighted region to learn more!</p>
-            </div>
-        </div>
-    
-        <!-- Swiper JS -->
-        <script src="https://unpkg.com/swiper@9/swiper-bundle.min.js"></script>
-    
-        <!-- Styles -->
-        <style>
-            /* Swiper Container */
-            .swiper-container {
-                width: 100%;
-                height: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                position: relative;
-            }
-    
-            .swiper-slide {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                transition: transform 0.3s ease, opacity 0.3s ease;
-                position: relative;
-                width: auto;
-            }
-    
-            /* Card Styles */
-            .card {
-                width: 500px;
-                height: 500px;
-                background-color: #f0f0f0;
-                border: 5px solid transparent;
-                border-radius: 25px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                transition: all 0.5s ease;
-                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-                overflow: hidden;
-            }
-    
-            .card-image {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                border-radius: 25px;
-                cursor: pointer; /* Indicate clickable */
-            }
-    
-            /* Description Styles */
-            .description {
-                margin-top: 20px;
-                font-size: 1.2rem;
-                color: #333;
-                opacity: 0;
-                transition: opacity 0.3s ease;
-                text-align: center;
-                width: 500px;
-            }
-    
-            .swiper-slide-active .card {
-                transform: scale(1) translateY(-20px);
-                opacity: 1;
-                border-color: #007BFF;
-            }
-    
-            .swiper-slide-active .description {
-                opacity: 1;
-                color: #fff;
-            }
-    
-            /* Navigation Arrows */
-            .swiper-button-next,
-            .swiper-button-prev {
-                color: #000;
-                width: 60px;
-                height: 60px;
-                background: rgba(255, 255, 255, 0.8);
-                border-radius: 50%;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-            }
-    
-            /* Modal Styles */
-            .modal {
-                display: none;
-                position: fixed;
-                z-index: 1000;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.8);
-                backdrop-filter: blur(5px);
-            }
-    
-            .modal-content {
-                margin: 5% auto;
-                padding: 20px;
-                width: 80%;
-                background-color: black;
-                color: white;
-                border-radius: 10px;
-                text-align: center;
-                position: relative;
-            }
-    
-            .modal-image {
-                max-width: 90%;
-                border: 2px solid #ccc;
-                margin-bottom: 20px;
-                cursor: crosshair; /* Indicate hoverable */
-            }
-    
-            .ai-response {
-                font-size: 1.2rem;
-                margin-top: 10px;
-            }
-    
-            .close {
-                position: absolute;
-                top: 10px;
-                right: 20px;
-                font-size: 24px;
-                cursor: pointer;
-                color: white;
-            }
-        </style>
-    
-        <!-- JavaScript -->
-        <script>
-            // Define color mappings to AI responses for each image
-            const aiResponsesMap = {
-                bloodSmear: {
-                    "255,0,0": "The bright red dots are red blood cells. They carry oxygen all around our body!",
-                    "0,255,0": "The green areas indicate white blood cells. They are the defenders of our body, ready to fight off infections!",
-                    "0,0,255": "The blue outlines highlight platelets. These are like band-aids inside your body, helping to stop bleeding!"
-                },
-                anotherImage: {
-                    // Add color responses for another image
-                },
-                thirdImage: {
-                    // Add color responses for the third image
-                }
-            };
-    
-            let currentImageKey = ""; // Tracks the current image's response set
-            let cachedCanvas = null; // Cache the canvas to improve performance
-    
-            // Open Modal
-            function openModal(imageSrc, imageKey) {
-                const modal = document.getElementById("modal");
-                const modalImage = document.getElementById("modal-image");
-                modal.style.display = "block";
-    
-                currentImageKey = imageKey; // Update the current image's key
-    
-                // Clear previous AI response
-                document.getElementById("ai-response").textContent = "Hover over a highlighted region to learn more!";
-    
-                // Remove any existing crossorigin attribute for local images
-                modalImage.removeAttribute("crossorigin");
-    
-                // Set the image source
-                modalImage.src = imageSrc;
-    
-                // Ensure the image is loaded before any processing
-                modalImage.onload = () => {
-                    // Initialize or clear the cached canvas
-                    cachedCanvas = document.createElement("canvas");
-                    const ctx = cachedCanvas.getContext("2d");
-                    cachedCanvas.width = modalImage.naturalWidth;
-                    cachedCanvas.height = modalImage.naturalHeight;
-                    ctx.drawImage(modalImage, 0, 0, cachedCanvas.width, cachedCanvas.height);
-                };
-    
-                // Handle image loading errors
-                modalImage.onerror = () => {
-                    console.error("Failed to load image:", imageSrc);
-                    document.getElementById("ai-response").textContent = "Failed to load image.";
-                    cachedCanvas = null;
-                };
-            }
-    
-            // Close Modal
-            function closeModal() {
-                const modal = document.getElementById("modal");
-                modal.style.display = "none";
-                document.getElementById("ai-response").textContent = "Hover over a highlighted region to learn more!";
-                cachedCanvas = null; // Clear the cached canvas
-            }
-    
-            // Handle hover detection over the modal image
-            document.getElementById("modal").addEventListener("mousemove", (event) => {
-                const modalImage = document.getElementById("modal-image");
-                const rect = modalImage.getBoundingClientRect();
-    
-                // Ensure the hover is within the modal image
-                if (
-                    event.clientX < rect.left ||
-                    event.clientX > rect.right ||
-                    event.clientY < rect.top ||
-                    event.clientY > rect.bottom
-                ) {
-                    document.getElementById("ai-response").textContent = "Hover over a highlighted region to learn more!";
-                    return;
-                }
-    
-                // If the canvas is not cached yet, return
-                if (!cachedCanvas) {
-                    document.getElementById("ai-response").textContent = "Hover over a highlighted region to learn more!";
-                    return;
-                }
-    
-                const ctx = cachedCanvas.getContext("2d");
-    
-                // Calculate scale factors to map mouse coordinates correctly
-                const scaleX = cachedCanvas.width / rect.width;
-                const scaleY = cachedCanvas.height / rect.height;
-    
-                const x = Math.floor((event.clientX - rect.left) * scaleX);
-                const y = Math.floor((event.clientY - rect.top) * scaleY);
-    
-                try {
-                    const pixel = ctx.getImageData(x, y, 1, 1).data;
-                    const colorKey = `${pixel[0]},${pixel[1]},${pixel[2]}`;
-    
-                    const aiResponse = aiResponsesMap[currentImageKey]?.[colorKey];
-                    if (aiResponse) {
-                        document.getElementById("ai-response").textContent = aiResponse;
-                    } else {
-                        document.getElementById("ai-response").textContent = "Hover over a highlighted region to learn more!";
-                    }
-                } catch (error) {
-                    // Handle potential errors, such as cross-origin issues
-                    console.error("Error accessing pixel data:", error);
-                    document.getElementById("ai-response").textContent = "Cannot access pixel data.";
-                }
-            });
-    
-            // Close modal when clicking outside the modal content
-            window.addEventListener('click', function(event) {
-                const modal = document.getElementById("modal");
-                if (event.target == modal) {
-                    closeModal();
-                }
-            });
-        </script>
-    
-        <!-- Carousel Initialization Script -->
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const swiper = new Swiper('.swiper-container', {
-                    // Basic Swiper parameters
-                    initialSlide: 1, // Start from the middle slide
-                    slidesPerView: 3,
-                    centeredSlides: true,
-                    spaceBetween: 150, // Increased spacing for better arch effect
-                    loop: false,
-                    resistance: true,
-                    grabCursor: true,
-                    allowTouchMove: true,
-    
-                    // Keyboard control
-                    keyboard: {
-                        enabled: true,
-                        onlyInViewport: true,
-                    },
-    
-                    // Pagination (dots)
-                    pagination: {
-                        el: '.swiper-pagination',
-                        clickable: true,
-                    },
-    
-                    // Navigation arrows
-                    navigation: {
-                        nextEl: '.swiper-button-next',
-                        prevEl: '.swiper-button-prev',
-                    },
-    
-                    // Transition speed
-                    speed: 600,
-    
-                    // Breakpoints for responsiveness
-                    breakpoints: {
-                        0: {
-                            slidesPerView: 1,
-                            spaceBetween: 50,
-                        },
-                        768: {
-                            slidesPerView: 3,
-                            spaceBetween: 150,
-                        },
-                    },
-    
-                    // Enable smooth resistance when dragging
-                    resistanceRatio: 0.85,
-    
-                    // Event listeners to handle description visibility
-                    on: {
-                        slideChangeTransitionStart: function () {
-                            updateDescriptions();
-                        },
-                        slideChangeTransitionEnd: function () {
-                            updateDescriptions();
-                        },
-                    },
-                });
-    
-                // Function to update descriptions based on active slide
-                function updateDescriptions() {
-                    const slides = document.querySelectorAll('.swiper-slide');
-                    slides.forEach((slide) => {
-                        const description = slide.querySelector('.description');
-                        if (slide.classList.contains('swiper-slide-active')) {
-                            description.style.opacity = '1';
-                            description.style.color = '#fff'; // Ensure visibility on dark background
-                        } else {
-                            description.style.opacity = '0';
-                            description.style.color = '#333';
-                        }
-                    });
-                }
-    
-                // Initial call to set descriptions correctly
-                updateDescriptions();
-    
-                // Optional: Adjust Swiper on window resize
-                window.addEventListener('resize', () => {
-                    swiper.update();
-                });
-            });
-        </script>
-    </section>
-    
+  <!-- Image -->
+  <div class="mt-10 w-full max-w-4xl px-4">
+    <img
+      src="https://placehold.co/1200x600"
+      alt="A grid of glowing blue keys with various icons representing different functionalities, glowing against a black background"
+      class="rounded-lg"
+    />
+  </div>
 
+  <!-- Button -->
+  <button
+    class="mt-10 text-lg font-medium px-8 py-3 rounded-full shadow-md flex items-center justify-center transition focus:ring-4 focus:ring-blue-300"
+    style="background: linear-gradient(to right, #1E40AF, #2563EB); font-family: 'Google Sans', sans-serif;"
+  >
+    <span>Build with Flash</span>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-5 w-5 ml-2"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M13 7l5 5m0 0l-5 5m5-5H6"
+      />
+    </svg>
+  </button>
+</section>
+
+ 
     <!-- Additional Scripts -->
     <script>
         const navbar = document.querySelector('.navbar');
