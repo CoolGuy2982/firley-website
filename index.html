@@ -91,6 +91,142 @@
         .navbar a.nav-link.active ~ .underline {
             left: 0;
         }
+    
+/* Responsive Navbar Styles */
+@media (max-width: 768px) {
+    /* Navigation Menu */
+    #nav-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.9);
+        flex-direction: column;
+        width: 200px;
+        padding: 1rem;
+        border-radius: 0 0.5rem 0.5rem 0;
+        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        transform: translateY(-20px);
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    #nav-menu.show {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Navigation Links */
+    .navbar a.nav-link {
+        margin: 1rem 0;
+        font-size: 1.2rem;
+    }
+
+    /* Underline Adjustment */
+    .navbar .underline {
+        display: none; /* Hide underline in mobile menu */
+    }
+}
+
+/* Hero Section Responsive Styles */
+.hero-section {
+    padding: 10vh 1rem;
+}
+
+.hero-section .title {
+    font-size: 3rem; /* Reduced font size for mobile */
+}
+
+.hero-section .subtitle {
+    font-size: 1.2rem;
+    padding: 0 1rem;
+}
+
+.hero-section .button-container {
+    flex-direction: column;
+    space-x: 0;
+    space-y: 1rem;
+}
+
+@media (min-width: 769px) {
+    .hero-section .title {
+        font-size: 6rem;
+    }
+
+    .hero-section .subtitle {
+        font-size: 1.5rem;
+    }
+
+    .hero-section .button-container {
+        flex-direction: row;
+        space-x: 6;
+    }
+}
+
+/* Carousel Responsive Styles */
+@media (max-width: 768px) {
+    .swiper-container {
+        height: 60vh; /* Adjust height for smaller screens */
+    }
+
+    .swiper-slide .card {
+        width: 300px;
+        height: 300px;
+    }
+
+    .swiper-slide .description {
+        width: 300px;
+        font-size: 1rem;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+        width: 40px;
+        height: 40px;
+    }
+
+    .swiper-button-next::after,
+    .swiper-button-prev::after {
+        font-size: 18px;
+    }
+
+    /* Pagination Dots */
+    .swiper-pagination {
+        bottom: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .swiper-container {
+        height: 50vh;
+    }
+
+    .swiper-slide .card {
+        width: 250px;
+        height: 250px;
+    }
+
+    .swiper-slide .description {
+        width: 250px;
+        font-size: 0.9rem;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+        width: 30px;
+        height: 30px;
+    }
+
+    .swiper-button-next::after,
+    .swiper-button-prev::after {
+        font-size: 14px;
+    }
+
+    /* Adjust Swiper space between slides */
+    .swiper-container .swiper-wrapper {
+        gap: 1rem;
+    }
+}
 
 
     /* Hero Section */
@@ -503,27 +639,33 @@
 <body class="custom-bg">
 
     <!--Navbar-->
-    <header class="navbar flex justify-between items-center px-12 py-4">
+    <header class="navbar flex justify-between items-center px-6 py-4 md:px-12">
         <!-- Logo and Brand Name -->
         <div class="flex items-center space-x-4">
-          <img
-            src="images/firley_bear.png"
-            alt="Firley Logo"
-            class="w-10 h-10 rounded-md object-cover"
-          />
-          <h1 class="text-lg font-medium">Firley</h1>
+            <img
+                src="images/firley_bear.png"
+                alt="Firley Logo"
+                class="w-10 h-10 rounded-md object-cover"
+            />
+            <h1 class="text-lg font-medium">Firley</h1>
         </div>
-      
+
+        <!-- Hamburger Menu Button (Visible on Mobile) -->
+        <button id="nav-toggle" class="md:hidden text-gray-300 hover:text-white focus:outline-none">
+            <i class="fas fa-bars fa-2x"></i>
+        </button>
+
         <!-- Navigation Links -->
-        <nav class="relative flex">
-          <a href="#" class="nav-link active">Home</a>
-          <a href="MicroLens.html" class="nav-link">Microlens</a>
-          <a href="about-firley.html" class="nav-link">About Us</a>
-          <a href="Updates.html" class="nav-link">Updates</a>
-          <a href="Contact Us.html" class="nav-link">Contact Us</a>
-          <span class="underline"></span>
+        <nav id="nav-menu" class="hidden md:flex relative">
+            <a href="#" class="nav-link active">Home</a>
+            <a href="MicroLens.html" class="nav-link">Microlens</a>
+            <a href="about-firley.html" class="nav-link">About Us</a>
+            <a href="Updates.html" class="nav-link">Updates</a>
+            <a href="Contact Us.html" class="nav-link">Contact Us</a>
+            <span class="underline"></span>
         </nav>
-      </header>      
+    </header>
+    
     <script>
         document.addEventListener("DOMContentLoaded", function () {
           const links = document.querySelectorAll(".navbar a.nav-link");
@@ -563,6 +705,27 @@
           }
         });
     </script>
+        <!-- Add this script after your existing navbar script -->
+    <script>
+        // Mobile Menu Toggle
+        document.addEventListener("DOMContentLoaded", function () {
+            const navToggle = document.getElementById("nav-toggle");
+            const navMenu = document.getElementById("nav-menu");
+
+            navToggle.addEventListener("click", function () {
+                navMenu.classList.toggle("show");
+            });
+
+            // Close the mobile menu when a link is clicked
+            const navLinks = navMenu.querySelectorAll(".nav-link");
+            navLinks.forEach(link => {
+                link.addEventListener("click", () => {
+                    navMenu.classList.remove("show");
+                });
+            });
+        });
+    </script>
+
 
     <!-- Hero Section -->
     <main class="hero-section text-center" id="hero">
@@ -661,7 +824,7 @@
   
     <!-- Lower Text Section -->
     <section class="lower-section" id="lowerText">
-        <span>See</span> <span>beyond</span> <span>the</span> <span>naked</span> <span>eye.</span> <span>MicroLens</span> <span>offers</span> <span>advanced</span> <span>microscopy</span> <span>and</span> <span>real-time</span> <span>analysis</span> <span>for</span> <span>all.</span> <span>Affordable,</span> <span>user-friendly,</span> <span>and</span> <span>powerful.</span> <span>Unlock</span> <span>the</span> <span>microscopic</span> <span>universe</span> <span>today!</span>
+        <span>See</span> <span>beyond</span> <span>the</span> <span>naked</span> <span>eye.</span> <span>MicroLens</span> <span>offers</span> <span>advanced</span> <span>microscopy</span> <span>and</span> <span>real-time</span> <span>analysis</span> <span>for</span> <span>all.</span> <span>Affordable,</span> <span>user-friendly,</span> <span>and</span> <span>powerful.</span>
     </section>
 
     <!-- Demo Header -->
@@ -750,7 +913,110 @@
     
         <!-- Swiper JS -->
         <script src="https://unpkg.com/swiper@9/swiper-bundle.min.js"></script>
-    
+    <!-- Update your existing Swiper initialization script -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const swiper = new Swiper('.swiper-container', {
+            // Basic Swiper parameters
+            initialSlide: 1, // Start from the middle slide
+            slidesPerView: 1, // Default to 1 slide per view
+            centeredSlides: true,
+            spaceBetween: 50, // Default spacing
+
+            loop: false,
+            resistance: true,
+            grabCursor: true,
+            allowTouchMove: true,
+
+            // Keyboard control
+            keyboard: {
+                enabled: true,
+                onlyInViewport: true,
+            },
+
+            // Pagination (dots)
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+
+            // Navigation arrows
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+
+            // Transition speed
+            speed: 600,
+
+            // Breakpoints for responsiveness
+            breakpoints: {
+                640: { // Small devices
+                    slidesPerView: 1,
+                    spaceBetween: 30,
+                },
+                768: { // Medium devices
+                    slidesPerView: 2,
+                    spaceBetween: 50,
+                },
+                1024: { // Large devices
+                    slidesPerView: 3,
+                    spaceBetween: 150,
+                },
+            },
+
+            // Enable smooth resistance when dragging
+            resistanceRatio: 0.85,
+
+            // Event listeners to handle description visibility
+            on: {
+                slideChangeTransitionStart: function () {
+                    updateDescriptions();
+                },
+                slideChangeTransitionEnd: function () {
+                    updateDescriptions();
+                },
+            },
+        });
+
+        // Function to update descriptions based on active slide
+        function updateDescriptions() {
+            const slides = document.querySelectorAll('.swiper-slide');
+            slides.forEach((slide) => {
+                const description = slide.querySelector('.description');
+                if (slide.classList.contains('swiper-slide-active')) {
+                    description.style.opacity = '1';
+                    description.style.color = '#fff'; // Ensure visibility on dark background
+                    // Enable pointer events on active slide
+                    slide.style.pointerEvents = 'auto';
+                    // Add click event to active slide's image
+                    const cardImage = slide.querySelector('.card-image');
+                    cardImage.onclick = function () {
+                        const imageKey = cardImage.alt.toLowerCase().replace(/\s+/g, '');
+                        openModal(imageKey);
+                    };
+                } else {
+                    description.style.opacity = '0';
+                    description.style.color = '#333';
+                    // Disable pointer events on inactive slides
+                    slide.style.pointerEvents = 'none';
+                    // Remove click event from inactive slides
+                    const cardImage = slide.querySelector('.card-image');
+                    cardImage.onclick = null;
+                }
+            });
+        }
+
+        // Initial call to set descriptions correctly
+        updateDescriptions();
+
+        // Optional: Adjust Swiper on window resize
+        window.addEventListener('resize', () => {
+            swiper.update();
+        });
+    });
+</script>
+
         <!-- Styles -->
         <style>
             /* Swiper Container */
@@ -1038,6 +1304,43 @@
                     max-height: 50vh;
                 }
             }
+
+            /* Responsive Navbar Styles */
+            @media (max-width: 768px) {
+                /* Navigation Menu */
+                #nav-menu {
+                    position: absolute;
+                    top: 100%;
+                    right: 0;
+                    background-color: rgba(0, 0, 0, 0.9);
+                    flex-direction: column;
+                    width: 200px;
+                    padding: 1rem;
+                    border-radius: 0 0 0.5rem 0.5rem;
+                    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+                    transform: translateY(-20px);
+                    opacity: 0;
+                    visibility: hidden;
+                }
+
+                #nav-menu.show {
+                    transform: translateY(0);
+                    opacity: 1;
+                    visibility: visible;
+                }
+
+                /* Navigation Links */
+                .navbar a.nav-link {
+                    margin: 1rem 0;
+                    font-size: 1.2rem;
+                }
+
+                /* Underline Adjustment */
+                .navbar .underline {
+                    display: none; /* Hide underline in mobile menu */
+                }
+            }
+
         </style>
     
         <!-- JavaScript -->
