@@ -1,0 +1,1916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firley</title>
+    <link rel="icon" href="images/favicon.png" type="image/png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+
+<style>
+    /* Global Styles */
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: 'Google Sans', sans-serif;
+        overflow-x: hidden;
+    }
+
+    .custom-bg {
+        background: radial-gradient(circle at 55% -30%, #2E1A47 10%, #000 50%);
+        min-height: 20vh;
+        width: 100%;
+        color: #fff;
+    }
+
+    /* Navbar Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+            backdrop-filter: none;
+            background: transparent;
+            transition: backdrop-filter 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 3rem;
+        }
+
+        .navbar.scrolled {
+            backdrop-filter: blur(15px);
+            background: rgba(0, 0, 0, 0.7);
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Increased text size and spacing */
+        .navbar a, .navbar a.nav-link {
+            font-size: 1rem; /* Increased font size */
+            font-weight: 400;
+            color: #9CA3AF;
+            margin: 0 2rem; /* Increased horizontal spacing */
+            text-decoration: none;
+            position: relative;
+            transition: color 0.2s;
+        }
+
+        .navbar a:hover, .navbar a.nav-link:hover {
+            color: #ffffff;
+        }
+
+        .navbar a.active, .navbar a.nav-link.active {
+            color: #ffffff;
+            border-bottom: 2px solid #9F7AEA; /* Lavender equivalent */
+        }
+
+        /* Underline Animation */
+        .navbar nav {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar nav .underline {
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            height: 2px;
+            width: 0;
+            background: #9F7AEA; /* Lavender underline */
+            transition: all 0.3s ease-in-out;
+            border-radius: 1px;
+        }
+
+        .navbar a.nav-link.active ~ .underline {
+            left: 0;
+        }
+    
+/* Responsive Navbar Styles */
+@media (max-width: 768px) {
+    /* Navigation Menu */
+    #nav-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.9);
+        flex-direction: column;
+        width: 200px;
+        padding: 1rem;
+        border-radius: 0 0.5rem 0.5rem 0;
+        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        transform: translateY(-20px);
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    #nav-menu.show {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Navigation Links */
+    .navbar a.nav-link {
+        margin: 1rem 0;
+        font-size: 1.2rem;
+    }
+
+    /* Underline Adjustment */
+    .navbar .underline {
+        display: none; /* Hide underline in mobile menu */
+    }
+}
+
+/* Hero Section Responsive Styles */
+.hero-section {
+    padding: 10vh 1rem;
+}
+
+.hero-section .title {
+    font-size: 3rem; /* Reduced font size for mobile */
+}
+
+.hero-section .subtitle {
+    font-size: 1.2rem;
+    padding: 0 1rem;
+}
+
+.hero-section .button-container {
+    flex-direction: column;
+    space-x: 0;
+    space-y: 1rem;
+}
+
+@media (min-width: 769px) {
+    .hero-section .title {
+        font-size: 6rem;
+    }
+
+    .hero-section .subtitle {
+        font-size: 1.5rem;
+    }
+
+    .hero-section .button-container {
+        flex-direction: row;
+        space-x: 6;
+    }
+}
+
+/* Carousel Responsive Styles */
+@media (max-width: 768px) {
+    .swiper-container {
+        height: 60vh; /* Adjust height for smaller screens */
+    }
+
+    .swiper-slide .card {
+        width: 300px;
+        height: 300px;
+    }
+
+    .swiper-slide .description {
+        width: 300px;
+        font-size: 1rem;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+        width: 40px;
+        height: 40px;
+    }
+
+    .swiper-button-next::after,
+    .swiper-button-prev::after {
+        font-size: 18px;
+    }
+
+    /* Pagination Dots */
+    .swiper-pagination {
+        bottom: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .swiper-container {
+        height: 50vh;
+    }
+
+    .swiper-slide .card {
+        width: 250px;
+        height: 250px;
+    }
+
+    .swiper-slide .description {
+        width: 250px;
+        font-size: 0.9rem;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+        width: 30px;
+        height: 30px;
+    }
+
+    .swiper-button-next::after,
+    .swiper-button-prev::after {
+        font-size: 14px;
+    }
+
+    /* Adjust Swiper space between slides */
+    .swiper-container .swiper-wrapper {
+        gap: 1rem;
+    }
+}
+
+
+    /* Hero Section */
+    .hero-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        min-height: calc(100vh - 120px);
+        padding-bottom: 15vh;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 1s ease, transform 1s ease;
+        text-align: center;
+    }
+
+    .hero-section.loaded {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .title {
+        font-size: 6rem;
+        font-weight: 400;
+        line-height: 1.2;
+        color: #ffffff;
+        margin: 0;
+        opacity: 0;
+        transform: translateY(-20px);
+        animation: fadeIn 1s forwards;
+    }
+
+    .subtitle,
+    .button-container {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    .subtitle {
+        animation: fadeIn 1s 0.5s forwards;
+    }
+
+    .button-container {
+        animation: fadeIn 1s 0.7s forwards;
+        margin-top: 2rem;
+    }
+
+    .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.85rem 2.5rem;
+        border-radius: 14px;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: all 0.3s ease-in-out;
+        text-decoration: none;
+    }
+
+    .button-blue {
+        background: linear-gradient(to right, #B794F4, #9F7AEA); /* Lavender gradient */
+        color: white;
+        box-shadow: 0 4px 10px rgba(159, 122, 234, 0.3);
+    }
+
+    .button-blue:hover {
+        background: #9F7AEA;
+    }
+
+    .button-outline {
+        border: 1px solid #9CA3AF;
+        color: #9CA3AF;
+        background: transparent;
+    }
+
+    .button-outline:hover {
+        border-color: #ffffff;
+        color: #ffffff;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Lower Section */
+    .lower-section {
+        text-align: center;
+        padding: 4rem 2rem;
+        font-size: 2.25rem;
+        font-weight: 400;
+        max-width: 900px;
+        margin: 30vh auto 0 auto;
+        line-height: 1.6;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .lower-section span {
+        color: black;
+        opacity: 0.2;
+        transition: color 0.15s ease, opacity 0.15s ease;
+    }
+
+    .lower-section span.gray {
+        color: rgba(186, 162, 245, 0.5); /* Shadowed lavender effect */
+        opacity: 0.8;
+    }
+
+    .lower-section span.blue {
+        color: #D6BCFA; /* Softer lavender */
+        opacity: 1;
+    }
+
+    /* Cards Container */
+    .cards-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        margin: 0 auto;
+        flex-wrap: wrap;
+        max-width: 1200px;
+        padding: 0 2rem;
+    }
+
+    /* Card Styles */
+    .card-container {
+        position: relative;
+        width: 350px;
+        height: 420px;
+        background: linear-gradient(135deg, #2E1A47, #1A0A29); /* Dark lavender tones */
+        border-radius: 1rem;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+        perspective: 1200px;
+        transform-style: preserve-3d;
+        transition: transform 0.6s ease, box-shadow 0.6s ease;
+        cursor: pointer;
+    }
+
+    .card-container:hover {
+        transform: rotateX(0deg) rotateY(0deg) scale(1.05);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+    }
+
+    .card-container img {
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        transform: translate(-50%, -50%) translateZ(50px);
+        width: 120px;
+        height: 120px;
+        z-index: 2;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 2px solid #ffffff;
+    }
+
+    .card-container div.content {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        background: rgba(18, 18, 18, 0.9);
+        padding: 1rem;
+        text-align: left;
+        color: #fff;
+        transform: translateZ(20px);
+        z-index: 1;
+    }
+
+    .card-container h3 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.25rem;
+        font-weight: 600;
+    }
+
+    .card-container p {
+        margin: 0;
+        font-size: 0.9rem;
+        color: #a1a1a1;
+    }
+
+    .card-container .card-icon {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        font-size: 1rem;
+        color: #cfcfcf;
+        transition: color 0.3s ease;
+    }
+
+    .card-container:hover .card-icon {
+        color: #F3E8FF; /* Lighter lavender */
+    }
+
+    /* Carousel Section */
+    #three-card-carousel {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        background-color: #000; /* Ensure background matches */
+    }
+
+    /* Swiper Styles */
+    .swiper-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        padding: 0 !important; /* Remove Swiper's internal padding */
+    }
+
+    .swiper-slide {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        position: relative;
+        width: auto; /* Let Swiper handle width based on slidesPerView */
+    }
+
+    .card {
+        width: 500px;
+        height: 500px;
+        background-color: #f0f0f0;
+        border: 5px solid transparent;
+        border-radius: 25px; /* More rounded corners */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.5s ease;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        backface-visibility: hidden;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .card-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Changed from fill to cover */
+        display: block;
+        border-radius: 25px; /* Match card's rounded corners */
+    }
+
+    /* Description Styles */
+    .description {
+        margin-top: 20px;
+        font-size: 1.2rem;
+        color: #333;
+        opacity: 0; /* Hidden by default */
+        transition: opacity 0.3s ease;
+        text-align: center;
+        width: 500px;
+    }
+
+    /* Active (centered) slide */
+    .swiper-slide-active .card {
+        transform: scale(1) rotate(0deg) translateY(-20px); /* Slightly higher */
+        opacity: 1;
+        border-color: #9F7AEA; /* Highlight active card border */
+        z-index: 3;
+    }
+
+    .swiper-slide-active .description {
+        opacity: 1; /* Show description when active */
+        color: #fff; /* Ensure text is visible on dark background */
+    }
+
+    /* Previous slide */
+    .swiper-slide-prev .card {
+        transform: scale(0.85) rotate(-20deg) translateY(0px);
+        opacity: 0.7;
+        z-index: 2;
+    }
+
+    .swiper-slide-prev .description {
+        opacity: 0; /* Hide description when not active */
+    }
+
+    /* Next slide */
+    .swiper-slide-next .card {
+        transform: scale(0.85) rotate(20deg) translateY(0px);
+        opacity: 0.7;
+        z-index: 2;
+    }
+
+    .swiper-slide-next .description {
+        opacity: 0; /* Hide description when not active */
+    }
+
+    /* Other slides */
+    .swiper-slide:not(.swiper-slide-active):not(.swiper-slide-prev):not(.swiper-slide-next) .card {
+        transform: scale(0.5) translateY(100px);
+        opacity: 0.3;
+        z-index: 1;
+    }
+
+    /* Hover effect */
+    .card:hover {
+        border-color: #9B59B6; /* Darker blue on hover */
+        cursor: pointer;
+    }
+
+    /* Navigation Arrows */
+    .swiper-button-next,
+    .swiper-button-prev {
+        color: #000;
+        width: 60px;
+        height: 60px;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 50%;
+        top: 50%;
+        transform: translateY(-50%);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .swiper-button-next::after,
+    .swiper-button-prev::after {
+        font-size: 24px;
+    }
+
+    /* Inactive Pagination Bullets */
+    .swiper-pagination-bullet {
+        background: transparent; /* Make the inside of the dots transparent */
+        border: 2px solid #ffffff; /* White border for inactive dots */
+        width: 14px;
+        height: 14px;
+        border-radius: 50%; /* Ensure circular shape */
+        opacity: 0.7; /* Slightly dimmed */
+        transition: background 0.3s ease, opacity 0.3s ease;
+    }
+
+    /* Active Pagination Bullet */
+    .swiper-pagination-bullet-active {
+        background: #9F7AEA; /* Lavender fill for active dot */
+        border-color: #b499e9; /* Match border to the lavender color */
+        opacity: 1; /* Fully opaque */
+    }
+
+    /* Adjust Hover Effect on Pagination Dots */
+    .swiper-pagination-bullet:hover {
+        opacity: 1; /* Brighten inactive dots on hover */
+        background: rgba(159, 122, 234, 0.3); /* Slight lavender hover effect */
+    }
+
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+        .card {
+            width: 350px;
+            height: 350px;
+        }
+
+        .description {
+            width: 350px;
+            font-size: 1rem;
+        }
+
+        .swiper-button-next,
+        .swiper-button-prev {
+            width: 50px;
+            height: 50px;
+        }
+
+        .swiper-button-next::after,
+        .swiper-button-prev::after {
+            font-size: 20px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .card {
+            width: 250px;
+            height: 250px;
+        }
+
+        .description {
+            width: 250px;
+            font-size: 0.9rem;
+        }
+
+        .swiper-button-next,
+        .swiper-button-prev {
+            width: 40px;
+            height: 40px;
+        }
+
+        .swiper-button-next::after,
+        .swiper-button-prev::after {
+            font-size: 16px;
+        }
+    }
+</style>
+
+<body class="custom-bg">
+
+    <!--Navbar-->
+    <header class="navbar flex justify-between items-center px-6 py-4 md:px-12">
+        <!-- Logo and Brand Name -->
+        <div class="flex items-center space-x-4">
+            <img
+                src="images/firley_bear.png"
+                alt="Firley Logo"
+                class="w-10 h-10 rounded-md object-cover"
+            />
+            <h1 class="text-lg font-medium">Firley</h1>
+        </div>
+
+        <!-- Hamburger Menu Button (Visible on Mobile) -->
+        <button id="nav-toggle" class="md:hidden text-gray-300 hover:text-white focus:outline-none">
+            <i class="fas fa-bars fa-2x"></i>
+        </button>
+
+        <!-- Navigation Links -->
+        <nav id="nav-menu" class="hidden md:flex relative">
+            <a href="#" class="nav-link active">Home</a>
+            <a href="MicroLens" class="nav-link">Microlens</a>
+            <a href="about-firley" class="nav-link">About Us</a>
+            <a href="Updates" class="nav-link">Updates</a>
+            <a href="Contact Us" class="nav-link">Contact Us</a>
+            <span class="underline"></span>
+        </nav>
+    </header>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const links = document.querySelectorAll(".navbar a.nav-link");
+          const underline = document.querySelector(".navbar .underline");
+      
+          function setUnderline(target) {
+            const linkRect = target.getBoundingClientRect();
+            const navRect = target.parentElement.getBoundingClientRect();
+      
+            underline.style.width = `${linkRect.width}px`;
+            underline.style.left = `${linkRect.left - navRect.left}px`;
+          }
+      
+          links.forEach((link) => {
+            link.addEventListener("click", (e) => {
+              e.preventDefault();
+      
+              // Remove active class from other links
+              links.forEach((item) => item.classList.remove("active"));
+      
+              // Animate underline to the clicked link
+              setUnderline(link);
+      
+              // Wait for the animation to complete, then add the active class
+              setTimeout(() => {
+                link.classList.add("active");
+                // Navigate to the new page
+                window.location.href = link.getAttribute("href");
+              }, 300); // Match the transition duration (300ms)
+            });
+          });
+      
+          // Initialize the underline on page load for the active link
+          const activeLink = document.querySelector(".navbar a.nav-link.active");
+          if (activeLink) {
+            setUnderline(activeLink);
+          }
+        });
+    </script>
+        <!-- Add this script after your existing navbar script -->
+    <script>
+        // Mobile Menu Toggle
+        document.addEventListener("DOMContentLoaded", function () {
+            const navToggle = document.getElementById("nav-toggle");
+            const navMenu = document.getElementById("nav-menu");
+
+            navToggle.addEventListener("click", function () {
+                navMenu.classList.toggle("show");
+            });
+
+            // Close the mobile menu when a link is clicked
+            const navLinks = navMenu.querySelectorAll(".nav-link");
+            navLinks.forEach(link => {
+                link.addEventListener("click", () => {
+                    navMenu.classList.remove("show");
+                });
+            });
+        });
+    </script>
+
+
+    <!-- Hero Section -->
+    <main class="hero-section text-center" id="hero">
+    <h1 class="title">Microlens</h1>
+    <p class="subtitle">
+        See the invisible, explore the impossible, and transform how you understand the world
+    </p>
+    <div class="button-container flex justify-center space-x-6 mt-8">
+      <a href="microlens-redirect_1" class="button button-blue mind-blow-hover">
+        Try the Free Microlens App &rarr;
+      </a>
+    </div>
+    </main>
+  
+    <style>
+        /* Base Button Styling */
+        .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.85rem 2.5rem;
+        border-radius: 14px;
+        font-size: 1rem;
+        font-weight: 500;
+        transition: all 0.3s ease-in-out;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        }
+    
+        .button-blue {
+        color: white;
+        background: linear-gradient(to right, #9f7aea, #6b46c1); /* Base lavender gradient */
+        box-shadow: 0 4px 10px rgba(159, 122, 234, 0.5);
+        }
+    
+        /* Mind-blowing Hover Effect */
+        .mind-blow-hover {
+        background: linear-gradient(45deg, #6b46c1, #9f7aea, #3b82f6, #60a5fa);
+        background-size: 300% 300%; /* Oversized gradient for animation */
+        color: white;
+        box-shadow: 0 4px 10px rgba(159, 122, 234, 0.5);
+        transition: all 0.5s ease;
+        }
+    
+        .mind-blow-hover:hover {
+        animation: gradient-shift 2s infinite ease-in-out; /* Gradient shift */
+        background-position: 100% 0; /* Change background position on hover */
+        transform: scale(1.05) rotateX(5deg); /* Subtle 3D pop */
+        box-shadow: 0 10px 20px rgba(59, 130, 246, 0.8); /* Glow effect */
+        border: 2px solid #ffffff; /* Highlight the button */
+        }
+    
+        /* After-effect Rippling */
+        .mind-blow-hover:hover::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 150%;
+        height: 150%;
+        background: rgba(255, 255, 255, 0.1);
+        transform: translate(-50%, -50%) scale(1);
+        border-radius: 50%;
+        opacity: 0;
+        animation: ripple 1s ease-out forwards;
+        z-index: -1;
+        }
+    
+        /* Gradient animation */
+        @keyframes gradient-shift {
+        0% {
+            background-position: 0% 0%;
+        }
+        50% {
+            background-position: 50% 100%;
+        }
+        100% {
+            background-position: 0% 0%;
+        }
+        }
+    
+        /* Ripple animation */
+        @keyframes ripple {
+        0% {
+            transform: translate(-50%, -50%) scale(0.5);
+            opacity: 0.8;
+        }
+        100% {
+            transform: translate(-50%, -50%) scale(3);
+            opacity: 0;
+        }
+        }
+    </style>
+  
+    <!-- Lower Text Section -->
+    <section class="lower-section" id="lowerText">
+        <span>See</span> <span>beyond</span> <span>the</span> <span>naked</span> <span>eye.</span> <span>MicroLens</span> <span>offers</span> <span>advanced</span> <span>microscopy</span> <span>and</span> <span>real-time</span> <span>AI analysis</span> <span>for</span> <span>all.</span> <span>Affordable,</span> <span>user-friendly,</span> <span>and</span> <span>powerful.</span>
+    </section>
+
+    <!-- Demo Header -->
+    <section style="padding: 4rem 2rem; color: #fff; text-align: center; margin-top: 15vh">
+        <h3 style="font-size: 1rem; font-weight: 400; color: #a1a1a1; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1rem;">
+            Demo
+        </h3>
+        <h2 style="font-size: 3rem; font-weight: 500; margin-bottom: 1.5rem; color: #fff;">
+            State of the Art Cell Segmentation Algorithm
+        </h2>
+        <p style="font-size: 1rem; font-weight: 400; line-height: 1.75; color: #a1a1a1; max-width: 800px; margin: 0 auto;">
+            Our cutting-edge algorithm offers unparalleled cell segmentation, delivering real-time precision for identifying cellular structures. Unlock new possibilities in research, education, and discovery with our AI microscope companion. Click on the demos below showcasing advanced insights.
+        </p>
+    </section>
+
+    <!-- Full-Screen Centered Three-Card Carousel Section -->
+    <section id="three-card-carousel">
+        <!-- Swiper CSS -->
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/swiper@9/swiper-bundle.min.css"
+        />
+    
+        <!-- Carousel Container -->
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <!-- Slide 1 -->
+                <div class="swiper-slide">
+                    <div class="card">
+                        <img src="images/segment1.png" alt="bloodSmear" class="card-image">
+                    </div>
+                    <p class="description">Human Blood Smear</p>
+                </div>
+                <!-- Slide 2 -->
+                <div class="swiper-slide">
+                    <div class="card">
+                        <img src="images/segment2.png" alt="anotherImage" class="card-image">
+                    </div>
+                    <p class="description">Plant Cell - Zea Seed</p>
+                </div>
+                <!-- Slide 3 -->
+                <div class="swiper-slide">
+                    <div class="card">
+                        <img src="images/segment3.png" alt="thirdImage" class="card-image">
+                    </div>
+                    <p class="description">Small Intestine Cell</p>
+                </div>
+            </div>
+            <!-- Navigation Arrows -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <!-- Pagination Dots -->
+            <div class="swiper-pagination"></div>
+        </div>
+    
+        <!-- Modal for Interaction -->
+        <div id="modal" class="modal">
+            <!-- Close Button -->
+            <div class="close-button" onclick="closeModal()">
+                &times;
+            </div>
+            <div class="modal-content">
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <!-- Image Section -->
+                    <div class="modal-image-container">
+                        <img id="modal-image" src="" alt="Segmented Image" class="modal-image">
+                    </div>
+                    <!-- Cards Section -->
+                    <div class="cards-section">
+                        <!-- Loading Overlay -->
+                        <div class="loading-overlay" id="loadingOverlay">
+                            <div class="loading-card">
+                                <!-- Shimmer effect -->
+                                <div class="shimmer"></div>
+                            </div>
+                        </div>
+                        <!-- Cards Container -->
+                        <div class="cards-container" id="cardsContainer">
+                            <!-- Cards will be generated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Swiper JS -->
+        <script src="https://unpkg.com/swiper@9/swiper-bundle.min.js"></script>
+    <!-- Update your existing Swiper initialization script -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const swiper = new Swiper('.swiper-container', {
+            // Basic Swiper parameters
+            initialSlide: 1, // Start from the middle slide
+            slidesPerView: 1, // Default to 1 slide per view
+            centeredSlides: true,
+            spaceBetween: 50, // Default spacing
+
+            loop: false,
+            resistance: true,
+            grabCursor: true,
+            allowTouchMove: true,
+
+            // Keyboard control
+            keyboard: {
+                enabled: true,
+                onlyInViewport: true,
+            },
+
+            // Pagination (dots)
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+
+            // Navigation arrows
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+
+            // Transition speed
+            speed: 600,
+
+            // Breakpoints for responsiveness
+            breakpoints: {
+                640: { // Small devices
+                    slidesPerView: 1,
+                    spaceBetween: 30,
+                },
+                768: { // Medium devices
+                    slidesPerView: 2,
+                    spaceBetween: 50,
+                },
+                1024: { // Large devices
+                    slidesPerView: 3,
+                    spaceBetween: 150,
+                },
+            },
+
+            // Enable smooth resistance when dragging
+            resistanceRatio: 0.85,
+
+            // Event listeners to handle description visibility
+            on: {
+                slideChangeTransitionStart: function () {
+                    updateDescriptions();
+                },
+                slideChangeTransitionEnd: function () {
+                    updateDescriptions();
+                },
+            },
+        });
+
+        // Function to update descriptions based on active slide
+        function updateDescriptions() {
+            const slides = document.querySelectorAll('.swiper-slide');
+            slides.forEach((slide) => {
+                const description = slide.querySelector('.description');
+                if (slide.classList.contains('swiper-slide-active')) {
+                    description.style.opacity = '1';
+                    description.style.color = '#fff'; // Ensure visibility on dark background
+                    // Enable pointer events on active slide
+                    slide.style.pointerEvents = 'auto';
+                    // Add click event to active slide's image
+                    const cardImage = slide.querySelector('.card-image');
+                    cardImage.onclick = function () {
+                        const imageKey = cardImage.alt.toLowerCase().replace(/\s+/g, '');
+                        openModal(imageKey);
+                    };
+                } else {
+                    description.style.opacity = '0';
+                    description.style.color = '#333';
+                    // Disable pointer events on inactive slides
+                    slide.style.pointerEvents = 'none';
+                    // Remove click event from inactive slides
+                    const cardImage = slide.querySelector('.card-image');
+                    cardImage.onclick = null;
+                }
+            });
+        }
+
+        // Initial call to set descriptions correctly
+        updateDescriptions();
+
+        // Optional: Adjust Swiper on window resize
+        window.addEventListener('resize', () => {
+            swiper.update();
+        });
+    });
+</script>
+
+        <!-- Styles -->
+        <style>
+            /* Swiper Container */
+            .swiper-container {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+            }
+    
+            .swiper-slide {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: transform 0.3s ease, opacity 0.3s ease;
+                position: relative;
+                width: auto;
+                pointer-events: none; /* Disable pointer events by default */
+            }
+    
+            /* Enable pointer events only on active slide */
+            .swiper-slide-active {
+                pointer-events: auto;
+            }
+    
+            /* Card Styles */
+            .card {
+                width: 500px;
+                height: 500px;
+                background-color: #f0f0f0;
+                border: 5px solid transparent;
+                border-radius: 25px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.5s ease;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+                overflow: hidden;
+            }
+    
+            .card-image {
+                width: 110%;
+                height: 110%;
+                object-fit: cover;
+                border-radius: 0px;
+                cursor: pointer; /* Indicate clickable */
+            }
+    
+            /* Description Styles */
+            .description {
+                margin-top: 20px;
+                font-size: 1.2rem;
+                color: #333;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                text-align: center;
+                width: 500px;
+            }
+    
+            .swiper-slide-active .card {
+                transform: scale(1) translateY(-20px);
+                opacity: 1;
+                border-color: #9B59B6  ;
+            }
+    
+            .swiper-slide-active .description {
+                opacity: 1;
+                color: #fff;
+            }
+    
+            /* Navigation Arrows */
+            .swiper-button-next,
+            .swiper-button-prev {
+                color: #000;
+                width: 60px;
+                height: 60px;
+                background: rgba(255, 255, 255, 0.8);
+                border-radius: 50%;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            }
+    
+            /* Modal Styles */
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1000;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                /* Frosted Glass Effect */
+                background-color: rgba(255, 255, 255, 0.2);
+                backdrop-filter: blur(10px);
+                overflow-y: auto; /* Enable scrolling if content exceeds modal height */
+            }
+    
+            .modal-content {
+                margin: 5% auto;
+                padding: 20px;
+                width: 90%;
+                max-width: 1200px;
+                background-color: rgba(255, 255, 255, 0.1);
+                color: #333;
+                border-radius: 10px;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                backdrop-filter: blur(10px);
+            }
+    
+            /* Close Button */
+            .close-button {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                background-color: white;
+                color: #333;
+                border-radius: 50%;
+                font-size: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                z-index: 1001;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            }
+    
+            /* Modal Body */
+            .modal-body {
+                display: flex;
+                width: 100%;
+                max-width: 1000px;
+            }
+    
+            .modal-image-container {
+                flex: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding-right: 20px;
+            }
+    
+            .modal-image {
+                max-width: 100%;
+                max-height: 80vh;
+                border: 2px solid #ccc;
+                border-radius: 10px;
+            }
+    
+            .cards-section {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                position: relative;
+                overflow: hidden;
+            }
+    
+            /* Loading Overlay Styling */
+            .loading-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: rgba(255,255,255,0.1);
+                z-index: 2;
+            }
+    
+            .loading-card {
+                width: 80%;
+                height: 200px;
+                background-color: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+                position: relative;
+            }
+    
+            /* Shimmer Effect */
+            .shimmer {
+                width: 50%;
+                height: 100%;
+                background: linear-gradient(90deg, rgba(224,224,224,0) 0%, rgba(255,255,255,0.5) 50%, rgba(224,224,224,0) 100%);
+                position: absolute;
+                top: 0;
+                left: -50%;
+                animation: shimmer 2s infinite;
+            }
+    
+            @keyframes shimmer {
+                0% {
+                    left: -50%;
+                }
+                100% {
+                    left: 150%;
+                }
+            }
+    
+            /* Cards Container Styling */
+            .cards-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                gap: 20px;
+                opacity: 0;
+                transform: translateY(50px);
+                transition: opacity 1s ease, transform 1s ease;
+                z-index: 1;
+                width: 100%;
+                padding-top: 20px;
+            }
+    
+            .cards-container.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+    
+            /* Individual Card Styling */
+            .info-card {
+                width: 80%;
+                max-width: 400px;
+                padding: 20px;
+                border-radius: 10px;
+                color: #ffffff;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                opacity: 0;
+                transform: translateY(20px);
+                animation: cardEntrance 0.8s forwards;
+                transform-origin: bottom;
+                perspective: 1000px;
+            }
+    
+            /* Enhanced animation for Cards */
+            @keyframes cardEntrance {
+                0% {
+                    opacity: 0;
+                    transform: translateY(50px) scale(0.95) rotateX(30deg);
+                }
+                100% {
+                    opacity: 1;
+                    transform: translateY(0) scale(1) rotateX(0deg);
+                }
+            }
+    
+            /* Delay for Each Card Animation */
+            .info-card:nth-child(1) {
+                animation-delay: 0.5s;
+            }
+    
+            .info-card:nth-child(2) {
+                animation-delay: 0.8s;
+            }
+    
+            .info-card:nth-child(3) {
+                animation-delay: 1.1s;
+            }
+    
+            /* Responsive Design */
+            @media (max-width: 768px) {
+                .modal-body {
+                    flex-direction: column;
+                    align-items: center;
+                }
+                .modal-image-container {
+                    padding-right: 0;
+                    margin-bottom: 20px;
+                }
+                .cards-section {
+                    width: 100%;
+                }
+                .info-card {
+                    width: 90%;
+                }
+                .modal-image {
+                    max-height: 50vh;
+                }
+            }
+
+            /* Responsive Navbar Styles */
+            @media (max-width: 768px) {
+                /* Navigation Menu */
+                #nav-menu {
+                    position: absolute;
+                    top: 100%;
+                    right: 0;
+                    background-color: rgba(0, 0, 0, 0.9);
+                    flex-direction: column;
+                    width: 200px;
+                    padding: 1rem;
+                    border-radius: 0 0 0.5rem 0.5rem;
+                    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+                    transform: translateY(-20px);
+                    opacity: 0;
+                    visibility: hidden;
+                }
+
+                #nav-menu.show {
+                    transform: translateY(0);
+                    opacity: 1;
+                    visibility: visible;
+                }
+
+                /* Navigation Links */
+                .navbar a.nav-link {
+                    margin: 1rem 0;
+                    font-size: 1.2rem;
+                }
+
+                /* Underline Adjustment */
+                .navbar .underline {
+                    display: none; /* Hide underline in mobile menu */
+                }
+            }
+
+        </style>
+    
+        <!-- JavaScript -->
+        <script>
+            // AI Responses for each image
+            const aiResponsesMap = {
+                bloodSmear: [
+                    {
+                        title: "Red Blood Cells",
+                        content: "The bright red dots are red blood cells. They carry oxygen all around our body!",
+                        backgroundColor: "#e74c3c"
+                    },
+                    {
+                        title: "White Blood Cells",
+                        content: "The green areas indicate white blood cells. They are the defenders of our body, ready to fight off infections!",
+                        backgroundColor: "#27ae60"
+                    },
+                    {
+                        title: "Platelets",
+                        content: "The blue outlines highlight platelets. These are like band-aids inside your body, helping to stop bleeding!",
+                        backgroundColor: "#2980b9"
+                    }
+                ],
+                anotherImage: [
+                {
+                        title: "Cell Wall",
+                        content: "The light green rectangles you see are cell walls. They're like the sturdy walls of a castle that protect and give shape to the plant cell.",
+                        backgroundColor: "#1b6254"
+                    },
+                    {
+                        title: "Cytoplasm",
+                        content: "Inside each cell wall is the cytoplasm, which appears as a pale, slightly darker green area. This is like a jelly that fills the space inside the cell and cushions all the cell’s parts.",
+                        backgroundColor: "#8bc4be"
+                    },
+                    {
+                        title: "Nucleus",
+                        content: "In some of the cells, you might spot the nucleus. It's like the command center of the cell, telling it how to grow and divide. It’s tricky to spot here, though!",
+                        backgroundColor: "#daba05"
+                    }
+                ],
+                thirdImage: [
+                {
+                        title: "Epithelial Tissue",
+                        content: "The pink background is the epithelial tissue. This layer helps in absorbing nutrients from the food we eat. Imagine it's like a sponge soaking up all the good stuff!",
+                        backgroundColor: "#db5c9f"
+                    },
+                    {
+                        title: "Villi",
+                        content: "The green parts look like the villi. These tiny, finger-like projections help absorb nutrients from the food you eat. Imagine them reaching out to grab the vitamins and minerals you need!",
+                        backgroundColor: "#44984a"
+                    },
+                    {
+                        title: "Blood Vessels",
+                        content: "The red dots are likely blood vessels. These carry the absorbed nutrients throughout the body, fueling all our cells just like a delivery truck.",
+                        backgroundColor: "#ce6f73"
+                    },
+                    {
+                        title: "Lumen",
+                        content: "The white spaces are the lumen of the intestine, where the food passes through as it gets broken down further.",
+                        backgroundColor: "#c1c2c4"
+                    },
+                ]
+            };
+    
+            // Open Modal
+            function openModal(imageKey) {
+                const modal = document.getElementById("modal");
+                const loadingOverlay = document.getElementById('loadingOverlay');
+                const cardsContainer = document.getElementById('cardsContainer');
+                const modalImage = document.getElementById("modal-image");
+    
+                // Set the image source based on imageKey
+                const imageSrcMap = {
+                    bloodSmear: 'images/segment1.png',
+                    anotherImage: 'images/segment2.png',
+                    thirdImage: 'images/segment3.png'
+                };
+    
+                modalImage.src = imageSrcMap[imageKey];
+    
+                // Clear previous cards
+                cardsContainer.innerHTML = '';
+    
+                modal.style.display = "block";
+    
+                // Simulate AI processing time (e.g., 2 seconds)
+                setTimeout(() => {
+                    // Hide Loading Overlay
+                    loadingOverlay.style.opacity = '0';
+                    setTimeout(() => {
+                        loadingOverlay.style.display = 'none';
+                    }, 500);
+    
+                    // Generate cards based on AI responses
+                    const responses = aiResponsesMap[imageKey];
+                    responses.forEach((response, index) => {
+                        const card = document.createElement('div');
+                        card.classList.add('info-card');
+                        card.style.backgroundColor = response.backgroundColor;
+                        card.style.animationDelay = `${0.5 + index * 0.3}s`; // Stagger animations
+    
+                        const title = document.createElement('h3');
+                        title.textContent = response.title;
+                        title.style.color = '#fff';
+    
+                        const content = document.createElement('p');
+                        content.textContent = response.content;
+                        content.style.color = '#fff';
+    
+                        card.appendChild(title);
+                        card.appendChild(content);
+    
+                        cardsContainer.appendChild(card);
+                    });
+    
+                    // Reveal Cards Container
+                    cardsContainer.classList.add('visible');
+                }, 2000); // 2000 milliseconds = 2 seconds
+            }
+    
+            // Close Modal
+            function closeModal() {
+                const modal = document.getElementById("modal");
+                const loadingOverlay = document.getElementById('loadingOverlay');
+                const cardsContainer = document.getElementById('cardsContainer');
+    
+                modal.style.display = "none";
+    
+                // Reset Loading Overlay and Cards Container
+                loadingOverlay.style.display = 'flex';
+                loadingOverlay.style.opacity = '1';
+                cardsContainer.classList.remove('visible');
+                cardsContainer.innerHTML = '';
+            }
+    
+            // Close modal when clicking outside the modal content
+            window.addEventListener('click', function(event) {
+                const modal = document.getElementById("modal");
+                const modalContent = document.querySelector(".modal-content");
+                if (event.target == modal) {
+                    closeModal();
+                }
+            });
+    
+            // Carousel Initialization Script
+            document.addEventListener('DOMContentLoaded', function () {
+                const swiper = new Swiper('.swiper-container', {
+                    // Basic Swiper parameters
+                    initialSlide: 1, // Start from the middle slide
+                    slidesPerView: 3,
+                    centeredSlides: true,
+                    spaceBetween: 150, // Increased spacing for better arch effect
+                    loop: false,
+                    resistance: true,
+                    grabCursor: true,
+                    allowTouchMove: true,
+    
+                    // Keyboard control
+                    keyboard: {
+                        enabled: true,
+                        onlyInViewport: true,
+                    },
+    
+                    // Pagination (dots)
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
+                    },
+    
+                    // Navigation arrows
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+    
+                    // Transition speed
+                    speed: 600,
+    
+                    // Breakpoints for responsiveness
+                    breakpoints: {
+                        0: {
+                            slidesPerView: 1,
+                            spaceBetween: 50,
+                        },
+                        768: {
+                            slidesPerView: 3,
+                            spaceBetween: 150,
+                        },
+                    },
+    
+                    // Enable smooth resistance when dragging
+                    resistanceRatio: 0.85,
+    
+                    // Event listeners to handle description visibility
+                    on: {
+                        slideChangeTransitionStart: function () {
+                            updateDescriptions();
+                        },
+                        slideChangeTransitionEnd: function () {
+                            updateDescriptions();
+                        },
+                    },
+                });
+    
+                // Function to update descriptions based on active slide
+                function updateDescriptions() {
+                    const slides = document.querySelectorAll('.swiper-slide');
+                    slides.forEach((slide) => {
+                        const description = slide.querySelector('.description');
+                        if (slide.classList.contains('swiper-slide-active')) {
+                            description.style.opacity = '1';
+                            description.style.color = '#fff'; // Ensure visibility on dark background
+                            // Enable pointer events on active slide
+                            slide.style.pointerEvents = 'auto';
+                            // Add click event to active slide's image
+                            const cardImage = slide.querySelector('.card-image');
+                            cardImage.onclick = function() {
+                                const imageKey = cardImage.alt;
+                                openModal(imageKey);
+                            };
+                        } else {
+                            description.style.opacity = '0';
+                            description.style.color = '#333';
+                            // Disable pointer events on inactive slides
+                            slide.style.pointerEvents = 'none';
+                            // Remove click event from inactive slides
+                            const cardImage = slide.querySelector('.card-image');
+                            cardImage.onclick = null;
+                        }
+                    });
+                }
+    
+                // Initial call to set descriptions correctly
+                updateDescriptions();
+    
+                // Optional: Adjust Swiper on window resize
+                window.addEventListener('resize', () => {
+                    swiper.update();
+                });
+            });
+    
+        </script>
+    </section>   
+
+    <!-- Small smaller-->
+<section style="padding: 4rem 2rem; text-align: center; margin-top: 15vh;">
+    <h2 style="font-size: 2rem; font-weight: 500; margin-bottom: 1rem; color: #fff;">One Platform, Endless Possibilities</h2>
+    <p style="font-size: 1rem; font-weight: 400; color: #a1a1a1; margin-bottom: 4rem;">
+        MicroLens now comes in two distinct versions, tailored to meet the needs of curious learners and industry professionals alike.
+    </p>
+    <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; max-width: 1200px; margin: 0 auto;">
+        <!-- Card 1 -->
+        <a href="https://microlens.firley.net" target="_blank" style="text-decoration: none;">
+            <div class="card-container" style="
+                position: relative;
+                width: 350px;
+                height: 420px;
+                background: linear-gradient(135deg, #2E1A47, #1A0A29); /* Dark lavender tones */
+                border-radius: 1rem;
+                overflow: hidden;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+                perspective: 1200px;
+                transform-style: preserve-3d;
+                transition: transform 0.6s ease, box-shadow 0.6s ease;
+                cursor: pointer;
+            "
+            onmousemove="applyParallaxEffect(event, this)"
+            onmouseleave="resetParallaxEffect(this)">
+                <img src="Home/free.png" 
+                    alt="1.5 Flash" 
+                    style="position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%) translateZ(50px); width: 120px; height: 120px; z-index: 2; border-radius: 0; border: none;">
+                <div style="
+                    position: absolute;
+                    bottom: 0;
+                    width: 100%;
+                    background: #121212;
+                    padding: 1rem;
+                    text-align: left;
+                    color: #fff;
+                    transform: translateZ(20px);
+                    z-index: 1;
+                ">
+                    <h3 style="margin: 0 0 0.5rem; font-size: 1.25rem; font-weight: 600;">Microlens Free</h3>
+                    <p style="margin: 0; font-size: 0.9rem; color: #a1a1a1;">
+                        For students, teachers, and curious minds. Explore the microscopic world with ease—perfect for classrooms and personal discovery.
+                    </p>
+                </div>
+            </div>
+        </a>
+
+        <!-- Card 2 -->
+        <a href="Contact Us" target="_blank" style="text-decoration: none;">
+            <div class="card-container" style="
+                position: relative;
+                width: 350px;
+                height: 420px;
+                background: linear-gradient(135deg, #1A0A29, #2E1A47); /* Reversed dark lavender tones */
+                border-radius: 1rem;
+                overflow: hidden;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+                perspective: 1200px;
+                transform-style: preserve-3d;
+                transition: transform 0.6s ease, box-shadow 0.6s ease;
+                cursor: pointer;
+            "
+            onmousemove="applyParallaxEffect(event, this)"
+            onmouseleave="resetParallaxEffect(this)">
+                <img src="Home/paid.png" 
+                    alt="Microlens Pro" 
+                    style="position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); width: 120px; height: 120px; z-index: 2; border-radius: 0; border: none;">
+                <div style="
+                    position: absolute;
+                    bottom: 0;
+                    width: 100%;
+                    background: #121212;
+                    padding: 1rem;
+                    text-align: left;
+                    color: #fff;
+                    transform: translateZ(20px);
+                    z-index: 1;
+                ">
+                    <h3 style="margin: 0 0 0.5rem; font-size: 1.25rem; font-weight: 600;">Microlens Pro</h3>
+                    <p style="margin: 0; font-size: 0.9rem; color: #a1a1a1;">
+                        For professionals and innovators. Advanced AI tools and custom solutions for scientists, developers, and industry leaders.
+                    </p>
+                </div>
+            </div>
+        </a>
+    </div>
+</section>
+
+<!-- Performance Section -->
+<section style="padding: 6rem 2rem; background-color: #000; color: #fff; text-align: center; margin-top: 15vh;">
+    <h2 style="font-size: 2.5rem; font-weight: 500; margin-bottom: 1rem;">What's new at Firley</h2>
+    <p style="font-size: 1rem; font-weight: 400; color: #a1a1a1; margin-bottom: 4rem;">
+        Stuff we did recently
+    </p>
+    <div class="performance-card-container" style="display: flex; justify-content: center; gap: 2.5rem; flex-wrap: wrap; max-width: 1200px; margin: 0 auto;">
+
+        <!-- Card 1 -->
+        <a href="microlens-update" target="_blank" style="text-decoration: none;">
+            <div class="performance-card-item">
+                <img src="Home/microlens.jpg" alt="Built for speed icon" class="performance-card-image">
+                <h3 class="performance-card-title">AI in a Microscope</h3>
+                <p class="performance-card-text">
+                    Introducing MicroLens - Making microscopes useful for everyone. Powered by AI.
+                </p>
+            </div>
+        </a>
+
+        <!-- Card 2 -->
+        <a href="gemini-research" target="_blank" style="text-decoration: none;">
+            <div class="performance-card-item">
+                <img src="Home/research.jpg" alt="Quality at lower cost icon" class="performance-card-image">
+                <h3 class="performance-card-title">Research on Multimodal Long Context LLMs for WQ Analysis</h3>
+                <p class="performance-card-text">
+                    Using VLMs for analyzing large volumes of WQ data in natural language
+                </p>
+            </div>
+        </a>
+
+        <!-- Card 3 -->
+        <a href="ecolens" target="_blank" style="text-decoration: none;">
+            <div class="performance-card-item">
+                <img src="Home/wq.jpg" alt="Long-context understanding icon" class="performance-card-image">
+                <h3 class="performance-card-title">AI to help you be Eco Friendly</h3>
+                <p class="performance-card-text">
+                    The world's first AI tool to help you recycle, avoid greenwashing, and live sustainably with just a picture
+                </p>
+            </div>
+        </a>
+
+    </div>
+</section>
+
+<style>
+/* Container Styling for All Cards */
+.performance-card-container {
+    display: flex;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+    align-items: stretch; /* Ensures all cards stretch to the same height */
+    justify-content: center;
+}
+
+/* Individual Card Styling */
+.performance-card-item {
+    background-color: #161616;
+    border-radius: 1rem;
+    border: 2px solid #333;
+    padding: 2.5rem;
+    flex: 1;
+    min-width: 280px;
+    max-width: 360px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Ensures even spacing between content */
+    height: 100%; /* Ensures all cards are the same height */
+}
+
+/* Image Styling */
+.performance-card-image {
+    display: block;
+    margin: 0 auto 1.5rem;
+    width: 100%;
+    aspect-ratio: 16 / 9; /* Ensures landscape aspect ratio */
+    object-fit: cover; /* Ensures the image scales correctly */
+    border-radius: 0.5rem;
+}
+
+/* Card Title Styling */
+.performance-card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+/* Card Text Styling */
+.performance-card-text {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: #cfcfcf;
+    line-height: 1.5;
+}
+
+/* Hover Effect */
+.performance-card-item:hover {
+    border-color: #8A2BE2; /* Lavender outline */
+    box-shadow: 0 6px 20px rgba(138, 43, 226, 0.7); /* Purple glow effect */
+    transform: scale(1.05); /* Slight zoom effect */
+}
+</style>
+
+
+<style>
+    /* Add hover effect to the card */
+    .performance-card:hover {
+        border-color: #8A2BE2; /* Lavender outline */
+        box-shadow: 0 6px 20px rgba(138, 43, 226, 0.7); /* Purple glow effect */
+        transform: scale(1.05); /* Slight zoom effect */
+    }
+</style>
+
+
+
+    <!--About Firley section-->
+    <section
+    class="bg-black min-h-screen flex flex-col items-center justify-center text-white font-sans mt-[30vh]"
+  >
+    <!-- Header and Description -->
+    <div class="text-center px-6 max-w-3xl">
+      <h1
+        class="text-[48px] font-medium leading-tight mb-6"
+        style="font-family: 'Google Sans', sans-serif; font-weight: 500;"
+      >
+        About Firley
+      </h1>
+      <p
+        class="text-[16px] leading-relaxed text-gray-400"
+        style="font-family: 'Google Sans', sans-serif; font-weight: 400;"
+      >
+        Who the heck are we and what do we do? Find out at our blog post. In summary, we're a group that really wants to stop environmental problems.
+      </p>
+    </div>
+  
+    <!-- Image -->
+<div class="mt-10 w-full max-w-4xl px-4">
+    <img
+      src="Home/firleyfam.png"
+      alt="A grid of glowing blue keys with various icons representing different functionalities, glowing against a black background"
+      class="rounded-[24px]"
+    />
+  </div>
+  
+  
+   <!-- Button -->
+<a href="about-firley" style="text-decoration: none;">
+    <button
+      class="mt-10 mb-20vh text-lg font-medium px-8 py-3 rounded-full shadow-md flex items-center justify-center transition focus:ring-4 focus:ring-purple-300 hover:scale-105"
+      style="background: linear-gradient(to right, #9F7AEA, #6B46C1); font-family: 'Google Sans', sans-serif; color: white; box-shadow: 0 4px 10px rgba(159, 122, 234, 0.5);"
+    >
+      <span>About Firley Blog Post</span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5 ml-2"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M13 7l5 5m0 0l-5 5m5-5H6"
+        />
+      </svg>
+    </button>
+  </a>
+  
+    </section>
+ 
+    <footer class="bg-black text-white text-center py-8 mt-20">
+        <!-- Logo Section -->
+        <div class="flex justify-center mb-4">
+            <a href="https://www.youtube.com/@Firley1" target="_blank" rel="noopener noreferrer">
+              <img
+                src="https://ssl.gstatic.com/atari/images/sociallinks/youtube_white_44dp.png"
+                alt="YouTube Logo"
+                class="w-10 h-10"
+              />
+            </a>
+        </div>          
+      
+        <!-- Copyright -->
+        <p class="text-sm font-medium mb-2">
+          &copy; 2024 <span class="font-bold">FIRLEY</span>
+        </p>
+      
+        <!-- Terms and Privacy Links -->
+        <p class="text-xs text-gray-400">
+          Your usage of Firley software indicates your agreement of the
+          <a href="terms-of-service" class="text-white underline hover:text-gray-300">terms of service</a>
+          and
+          <a href="privacy-policy" class="text-white underline hover:text-gray-300">privacy policy</a>.
+        </p>
+      </footer>      
+    <!-- Additional Scripts -->
+    <script>
+        const navbar = document.querySelector('.navbar');
+        const lowerSection = document.querySelector('.lower-section');
+        const heroSection = document.querySelector('.hero-section');
+        const words = lowerSection.querySelectorAll('span');
+
+        window.addEventListener('scroll', () => {
+            const lowerTextPosition = lowerSection.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
+
+            words.forEach((word, index) => {
+                const wordTriggerPosition = windowHeight - (index * 25);
+                if (lowerTextPosition < wordTriggerPosition) {
+                    for (let i = 0; i <= index; i++) {
+                        words[i].classList.add('blue');
+                        words[i].classList.remove('gray');
+                    }
+                } else if (lowerTextPosition < wordTriggerPosition + 50) {
+                    word.classList.add('gray');
+                    word.classList.remove('blue');
+                } else {
+                    word.classList.remove('blue', 'gray');
+                }
+            });
+
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        window.addEventListener('load', () => {
+            heroSection.classList.add('loaded');
+        });
+    </script>
+</body>
+
+</html>
