@@ -32,6 +32,7 @@
         }
 
         /* Navbar Styles */
+        /* Navbar Styles */
         .navbar {
             position: fixed;
             top: 0;
@@ -43,7 +44,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 1.5rem;
+            padding: 1rem 3rem;
         }
 
         .navbar.scrolled {
@@ -52,11 +53,12 @@
             box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
         }
 
+        /* Increased text size and spacing */
         .navbar a, .navbar a.nav-link {
-            font-size: 1rem;
+            font-size: 1rem; /* Increased font size */
             font-weight: 400;
             color: #9CA3AF;
-            margin: 0 1rem;
+            margin: 0 2rem; /* Increased horizontal spacing */
             text-decoration: none;
             position: relative;
             transition: color 0.2s;
@@ -68,14 +70,67 @@
 
         .navbar a.active, .navbar a.nav-link.active {
             color: #ffffff;
-            border-bottom: 2px solid #9F7AEA;
+            border-bottom: 2px solid #9F7AEA; /* Lavender equivalent */
         }
 
+        /* Underline Animation */
         .navbar nav {
             position: relative;
             display: flex;
             align-items: center;
         }
+
+        .navbar nav .underline {
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            height: 2px;
+            width: 0;
+            background: #9F7AEA; /* Lavender underline */
+            transition: all 0.3s ease-in-out;
+            border-radius: 1px;
+        }
+
+        .navbar a.nav-link.active ~ .underline {
+            left: 0;
+        }
+    
+/* Responsive Navbar Styles */
+@media (max-width: 768px) {
+    /* Navigation Menu */
+    #nav-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.9);
+        flex-direction: column;
+        width: 200px;
+        padding: 1rem;
+        border-radius: 0 0.5rem 0.5rem 0;
+        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        transform: translateY(-20px);
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    #nav-menu.show {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Navigation Links */
+    .navbar a.nav-link {
+        margin: 1rem 0;
+        font-size: 1.2rem;
+    }
+
+    /* Underline Adjustment */
+    .navbar .underline {
+        display: none; /* Hide underline in mobile menu */
+    }
+}
+
 
         /* Contact Form Styles */
         .contact-container {
@@ -143,15 +198,32 @@
 <body class="custom-bg">
 
     <!-- Navbar -->
-    <header class="navbar">
-        <h1>Firley</h1>
-        <nav>
-            <a href="home" class="nav-link">Home</a>
-            <a href="microlens" class="nav-link">MicroLens</a>
-            <a href="updates" class="nav-link">Updates</a>
-            <a href="contact" class="nav-link active">Contact Us</a>
-        </nav>
-    </header>
+    <header class="navbar flex justify-between items-center px-6 py-4 md:px-12 fade-in-element">
+      <!-- Logo and Brand Name -->
+      <div class="flex items-center space-x-4">
+          <img
+              src="images/firley_bear.png"
+              alt="Firley Logo"
+              class="w-10 h-10 rounded-md object-cover"
+          />
+          <h1 class="text-lg font-medium">Firley</h1>
+      </div>
+
+      <!-- Hamburger Menu Button (Visible on Mobile) -->
+      <button id="nav-toggle" class="md:hidden text-gray-300 hover:text-white focus:outline-none fade-in-element">
+          <i class="fas fa-bars fa-2x"></i>
+      </button>
+
+      <!-- Navigation Links -->
+      <nav id="nav-menu" class="hidden md:flex relative">
+          <a href="home" class="nav-link">Home</a>
+          <a href="microlens" class="nav-link">Microlens</a>
+          <a href="about-firley" class="nav-link">About Us</a>
+          <a href="updates" class="nav-link">Updates</a>
+          <a href="#" class="nav-link active">Contact Us</a>
+          <span class="underline"></span>
+      </nav>
+  </header>
 
     <!-- Contact Form Section -->
     <main class="contact-container">
