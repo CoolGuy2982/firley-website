@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+</head>
+<body>
+    <script>
+        // Get query parameters from the URL
+        const params = new URLSearchParams(window.location.search);
+        const email = params.get('email');
+        const subject = params.get('subject');
+        const body = params.get('body');
+
+        // Construct mailto URL
+        const mailtoUrl = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+        // Redirect to the mailto link
+        window.location.href = mailtoUrl;
+    </script>
+    <p>Redirecting to your email client...</p>
+</body>
+</html>
