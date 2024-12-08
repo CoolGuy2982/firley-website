@@ -18,6 +18,30 @@
         padding: 0;
     }
 
+    /* Fade-in Animation */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .fade-in-element {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .fade-in-element.visible {
+        opacity: 1;
+        transform: translateY(0);
+        animation: fadeInUp 0.6s forwards;
+    }
+
     body {
         font-family: 'Google Sans', sans-serif;
         overflow-x: hidden;
@@ -640,7 +664,7 @@
 <body class="custom-bg">
 
     <!--Navbar-->
-    <header class="navbar flex justify-between items-center px-6 py-4 md:px-12">
+    <header class="navbar flex justify-between items-center px-6 py-4 md:px-12 fade-in-element">
         <!-- Logo and Brand Name -->
         <div class="flex items-center space-x-4">
             <img
@@ -652,7 +676,7 @@
         </div>
 
         <!-- Hamburger Menu Button (Visible on Mobile) -->
-        <button id="nav-toggle" class="md:hidden text-gray-300 hover:text-white focus:outline-none">
+        <button id="nav-toggle" class="md:hidden text-gray-300 hover:text-white focus:outline-none fade-in-element">
             <i class="fas fa-bars fa-2x"></i>
         </button>
 
@@ -729,7 +753,7 @@
 
 
     <!-- Hero Section -->
-    <main class="hero-section text-center" id="hero">
+    <main class="hero-section text-center fade-in-element" id="hero">
     <h1 class="title">Microlens</h1>
     <p class="subtitle">
         See the invisible, explore the impossible, and transform how you understand the world
@@ -824,12 +848,12 @@
     </style>
   
     <!-- Lower Text Section -->
-    <section class="lower-section" id="lowerText">
+    <section class="lower-section fade-in-element" id="lowerText">
         <span>See</span> <span>beyond</span> <span>the</span> <span>naked</span> <span>eye.</span> <span>MicroLens</span> <span>offers</span> <span>advanced</span> <span>microscopy</span> <span>and</span> <span>real-time</span> <span>AI analysis</span> <span>for</span> <span>all.</span> <span>Affordable,</span> <span>user-friendly,</span> <span>and</span> <span>powerful.</span>
     </section>
 
     <!-- Demo Header -->
-    <section style="padding: 4rem 2rem; color: #fff; text-align: center; margin-top: 15vh">
+    <section class="fade-in-element" style="padding: 4rem 2rem; color: #fff; text-align: center; margin-top: 15vh">
         <h3 style="font-size: 1rem; font-weight: 400; color: #a1a1a1; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1rem;">
             Demo
         </h3>
@@ -842,7 +866,7 @@
     </section>
 
     <!-- Full-Screen Centered Three-Card Carousel Section -->
-    <section id="three-card-carousel">
+    <section class="fade-in-element" id="three-card-carousel">
         <!-- Swiper CSS -->
         <link
             rel="stylesheet"
@@ -1587,7 +1611,7 @@
     </section>   
 
     <!-- Small smaller-->
-<section style="padding: 4rem 2rem; text-align: center; margin-top: 15vh;">
+<section class="fade-in-element" style="padding: 4rem 2rem; text-align: center; margin-top: 15vh;">
     <h2 style="font-size: 2rem; font-weight: 500; margin-bottom: 1rem; color: #fff;">One Platform, Endless Possibilities</h2>
     <p style="font-size: 1rem; font-weight: 400; color: #a1a1a1; margin-bottom: 4rem;">
         MicroLens now comes in two distinct versions, tailored to meet the needs of curious learners and industry professionals alike.
@@ -1676,7 +1700,7 @@
 </section>
 
 <!-- Performance Section -->
-<section style="padding: 6rem 2rem; background-color: #000; color: #fff; text-align: center; margin-top: 15vh;">
+<section class="fade-in-element" style="padding: 6rem 2rem; background-color: #000; color: #fff; text-align: center; margin-top: 15vh;">
     <h2 style="font-size: 2.5rem; font-weight: 500; margin-bottom: 1rem;">What's new at Firley</h2>
     <p style="font-size: 1rem; font-weight: 400; color: #a1a1a1; margin-bottom: 4rem;">
         Stuff we did recently
@@ -1795,7 +1819,7 @@
 
     <!--About Firley section-->
     <section
-    class="bg-black min-h-screen flex flex-col items-center justify-center text-white font-sans mt-[30vh]"
+    class="bg-black min-h-screen flex flex-col items-center justify-center text-white font-sans mt-[30vh] fade-in-element"
   >
     <!-- Header and Description -->
     <div class="text-center px-6 max-w-3xl">
@@ -1911,6 +1935,30 @@
             heroSection.classList.add('loaded');
         });
     </script>
+    <!-- Add this script before the closing </body> tag -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const faders = document.querySelectorAll('.fade-in-element');
+
+        const appearOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const appearOnScroll = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            });
+        }, appearOptions);
+
+        faders.forEach(fader => {
+            appearOnScroll.observe(fader);
+        });
+    });
+</script>
+
 </body>
 
 </html>
