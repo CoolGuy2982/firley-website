@@ -199,6 +199,14 @@
             -webkit-text-fill-color: #cfcfcf !important;
             transition: background-color 5000s ease-in-out 0s;
         }
+
+        /* Disable Grammarly on Specific Fields */
+        .contact-form input[type="text"],
+        .contact-form textarea {
+            data-gramm="false";
+            /* Alternative attribute if needed */
+            /* data-gramm_editor="false"; */
+        }
     </style>
 </head>
 
@@ -264,26 +272,26 @@
           setUnderline(activeLink);
         }
       });
-    </script>
+  </script>
 
-    <script>
-        // Mobile Menu Toggle
-        document.addEventListener("DOMContentLoaded", function () {
-            const navToggle = document.getElementById("nav-toggle");
-            const navMenu = document.getElementById("nav-menu");
+  <script>
+      // Mobile Menu Toggle
+      document.addEventListener("DOMContentLoaded", function () {
+          const navToggle = document.getElementById("nav-toggle");
+          const navMenu = document.getElementById("nav-menu");
 
-            navToggle.addEventListener("click", function () {
-                navMenu.classList.toggle("show");
-            });
+          navToggle.addEventListener("click", function () {
+              navMenu.classList.toggle("show");
+          });
 
-            const navLinks = navMenu.querySelectorAll(".nav-link");
-            navLinks.forEach(link => {
-                link.addEventListener("click", () => {
-                    navMenu.classList.remove("show");
-                });
-            });
-        });
-    </script>
+          const navLinks = navMenu.querySelectorAll(".nav-link");
+          navLinks.forEach(link => {
+              link.addEventListener("click", () => {
+                  navMenu.classList.remove("show");
+              });
+          });
+      });
+  </script>
 
     <!-- Contact Form Section -->
     <main class="contact-container">
@@ -310,6 +318,7 @@
                 autocorrect="off"
                 autocapitalize="off"
                 spellcheck="false"
+                data-gramm="false"
             >
 
             <label for="body">Message</label>
@@ -320,6 +329,7 @@
                 required 
                 autocomplete="off"
                 spellcheck="false"
+                data-gramm="false"
             ></textarea>
 
             <button type="submit">Send</button>
