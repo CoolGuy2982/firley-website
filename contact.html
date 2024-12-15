@@ -32,7 +32,6 @@
         }
 
         /* Navbar Styles */
-        /* Navbar Styles */
         .navbar {
             position: fixed;
             top: 0;
@@ -95,41 +94,41 @@
             left: 0;
         }
     
-/* Responsive Navbar Styles */
-@media (max-width: 768px) {
-    /* Navigation Menu */
-    #nav-menu {
-        position: absolute;
-        top: 100%;
-        right: 0;
-        background-color: rgba(0, 0, 0, 0.9);
-        flex-direction: column;
-        width: 200px;
-        padding: 1rem;
-        border-radius: 0 0.5rem 0.5rem 0;
-        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-        transform: translateY(-20px);
-        opacity: 0;
-        visibility: hidden;
-    }
+        /* Responsive Navbar Styles */
+        @media (max-width: 768px) {
+            /* Navigation Menu */
+            #nav-menu {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                background-color: rgba(0, 0, 0, 0.9);
+                flex-direction: column;
+                width: 200px;
+                padding: 1rem;
+                border-radius: 0 0.5rem 0.5rem 0;
+                transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+                transform: translateY(-20px);
+                opacity: 0;
+                visibility: hidden;
+            }
 
-    #nav-menu.show {
-        transform: translateY(0);
-        opacity: 1;
-        visibility: visible;
-    }
+            #nav-menu.show {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
 
-    /* Navigation Links */
-    .navbar a.nav-link {
-        margin: 1rem 0;
-        font-size: 1.2rem;
-    }
+            /* Navigation Links */
+            .navbar a.nav-link {
+                margin: 1rem 0;
+                font-size: 1.2rem;
+            }
 
-    /* Underline Adjustment */
-    .navbar .underline {
-        display: none; /* Hide underline in mobile menu */
-    }
-}
+            /* Underline Adjustment */
+            .navbar .underline {
+                display: none; /* Hide underline in mobile menu */
+            }
+        }
 
 
         /* Contact Form Styles */
@@ -282,15 +281,39 @@
     <!-- Contact Form Section -->
     <main class="contact-container">
         <h2>Contact Us</h2>
-        <form class="contact-form" id="contactForm">
+        <form class="contact-form" id="contactForm" autocomplete="off">
             <label for="email">Your Email</label>
-            <input type="email" id="email" name="email" placeholder="you@example.com" required>
+            <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                placeholder="you@example.com" 
+                required 
+                autocomplete="email"
+            >
 
             <label for="subject">Subject</label>
-            <input type="text" id="subject" name="subject" placeholder="Subject..." required>
+            <input 
+                type="text" 
+                id="subject" 
+                name="subject" 
+                placeholder="Subject..." 
+                required 
+                autocomplete="off"
+                autocorrect="off"
+                autocapitalize="off"
+                spellcheck="false"
+            >
 
             <label for="body">Message</label>
-            <textarea id="body" name="body" placeholder="Write your message here..." required></textarea>
+            <textarea 
+                id="body" 
+                name="body" 
+                placeholder="Write your message here..." 
+                required 
+                autocomplete="off"
+                spellcheck="false"
+            ></textarea>
 
             <button type="submit">Send</button>
         </form>
