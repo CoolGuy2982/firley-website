@@ -26,7 +26,7 @@
         }
 
         .custom-bg {
-            background: radial-gradient(circle at 55% -30%, #2E1A47 10%, #000 50%);
+            background: radial-gradient(circle at 55% -10%, #2E1A47 10%, #000 50%);
             min-height: 100vh;
             width: 100%;
         }
@@ -200,14 +200,14 @@
     <!-- Navbar -->
     <header class="navbar flex justify-between items-center px-6 py-4 md:px-12 fade-in-element">
       <!-- Logo and Brand Name -->
-      <div class="flex items-center space-x-4">
-          <img
-              src="images/firley_bear.png"
-              alt="Firley Logo"
-              class="w-10 h-10 rounded-md object-cover"
-          />
-          <h1 class="text-lg font-medium">Firley</h1>
-      </div>
+      <a href="/home" class="flex items-center space-x-4">
+        <img
+            src="images/firley_bear.png"
+            alt="Firley Logo"
+            class="w-10 h-10 rounded-md object-cover"
+        />
+        <h1 class="text-lg font-medium">Firley</h1>
+    </a>
 
       <!-- Hamburger Menu Button (Visible on Mobile) -->
       <button id="nav-toggle" class="md:hidden text-gray-300 hover:text-white focus:outline-none fade-in-element">
@@ -224,6 +224,60 @@
           <span class="underline"></span>
       </nav>
   </header>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const links = document.querySelectorAll(".navbar a.nav-link");
+      const underline = document.querySelector(".navbar .underline");
+  
+      function setUnderline(target) {
+        const linkRect = target.getBoundingClientRect();
+        const navRect = target.parentElement.getBoundingClientRect();
+        underline.style.width = `${linkRect.width}px`;
+        underline.style.left = `${linkRect.left - navRect.left}px`;
+      }
+  
+      links.forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          // Remove active class from other links
+          links.forEach((item) => item.classList.remove("active"));
+          // Animate underline
+          setUnderline(link);
+          // Navigate after animation
+          setTimeout(() => {
+            link.classList.add("active");
+            window.location.href = link.getAttribute("href");
+          }, 300);
+        });
+      });
+  
+      const activeLink = document.querySelector(".navbar a.nav-link.active");
+      if (activeLink) {
+        setUnderline(activeLink);
+      }
+    });
+</script>
+
+<script>
+    // Mobile Menu Toggle
+    document.addEventListener("DOMContentLoaded", function () {
+        const navToggle = document.getElementById("nav-toggle");
+        const navMenu = document.getElementById("nav-menu");
+
+        navToggle.addEventListener("click", function () {
+            navMenu.classList.toggle("show");
+        });
+
+        const navLinks = navMenu.querySelectorAll(".nav-link");
+        navLinks.forEach(link => {
+            link.addEventListener("click", () => {
+                navMenu.classList.remove("show");
+            });
+        });
+    });
+</script>
+
 
     <!-- Contact Form Section -->
     <main class="contact-container">
