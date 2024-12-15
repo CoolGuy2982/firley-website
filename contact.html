@@ -130,7 +130,6 @@
             }
         }
 
-
         /* Contact Form Styles */
         .contact-container {
             max-width: 600px;
@@ -191,6 +190,15 @@
             color: #fff;
             margin-top: 5vh;
         }
+
+        /* Autofill Background Fix for Chrome */
+        .contact-form input[type="email"]:-webkit-autofill,
+        .contact-form input[type="email"]:-webkit-autofill:hover,
+        .contact-form input[type="email"]:-webkit-autofill:focus {
+            -webkit-box-shadow: 0 0 0px 1000px #161616 inset !important;
+            -webkit-text-fill-color: #cfcfcf !important;
+            transition: background-color 5000s ease-in-out 0s;
+        }
     </style>
 </head>
 
@@ -222,61 +230,60 @@
           <a href="#" class="nav-link active">Contact Us</a>
           <span class="underline"></span>
       </nav>
-  </header>
+    </header>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const links = document.querySelectorAll(".navbar a.nav-link");
-      const underline = document.querySelector(".navbar .underline");
-  
-      function setUnderline(target) {
-        const linkRect = target.getBoundingClientRect();
-        const navRect = target.parentElement.getBoundingClientRect();
-        underline.style.width = `${linkRect.width}px`;
-        underline.style.left = `${linkRect.left - navRect.left}px`;
-      }
-  
-      links.forEach((link) => {
-        link.addEventListener("click", (e) => {
-          e.preventDefault();
-          // Remove active class from other links
-          links.forEach((item) => item.classList.remove("active"));
-          // Animate underline
-          setUnderline(link);
-          // Navigate after animation
-          setTimeout(() => {
-            link.classList.add("active");
-            window.location.href = link.getAttribute("href");
-          }, 300);
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const links = document.querySelectorAll(".navbar a.nav-link");
+        const underline = document.querySelector(".navbar .underline");
+    
+        function setUnderline(target) {
+          const linkRect = target.getBoundingClientRect();
+          const navRect = target.parentElement.getBoundingClientRect();
+          underline.style.width = `${linkRect.width}px`;
+          underline.style.left = `${linkRect.left - navRect.left}px`;
+        }
+    
+        links.forEach((link) => {
+          link.addEventListener("click", (e) => {
+            e.preventDefault();
+            // Remove active class from other links
+            links.forEach((item) => item.classList.remove("active"));
+            // Animate underline
+            setUnderline(link);
+            // Navigate after animation
+            setTimeout(() => {
+              link.classList.add("active");
+              window.location.href = link.getAttribute("href");
+            }, 300);
+          });
         });
+    
+        const activeLink = document.querySelector(".navbar a.nav-link.active");
+        if (activeLink) {
+          setUnderline(activeLink);
+        }
       });
-  
-      const activeLink = document.querySelector(".navbar a.nav-link.active");
-      if (activeLink) {
-        setUnderline(activeLink);
-      }
-    });
-</script>
+    </script>
 
-<script>
-    // Mobile Menu Toggle
-    document.addEventListener("DOMContentLoaded", function () {
-        const navToggle = document.getElementById("nav-toggle");
-        const navMenu = document.getElementById("nav-menu");
+    <script>
+        // Mobile Menu Toggle
+        document.addEventListener("DOMContentLoaded", function () {
+            const navToggle = document.getElementById("nav-toggle");
+            const navMenu = document.getElementById("nav-menu");
 
-        navToggle.addEventListener("click", function () {
-            navMenu.classList.toggle("show");
-        });
+            navToggle.addEventListener("click", function () {
+                navMenu.classList.toggle("show");
+            });
 
-        const navLinks = navMenu.querySelectorAll(".nav-link");
-        navLinks.forEach(link => {
-            link.addEventListener("click", () => {
-                navMenu.classList.remove("show");
+            const navLinks = navMenu.querySelectorAll(".nav-link");
+            navLinks.forEach(link => {
+                link.addEventListener("click", () => {
+                    navMenu.classList.remove("show");
+                });
             });
         });
-    });
-</script>
-
+    </script>
 
     <!-- Contact Form Section -->
     <main class="contact-container">
