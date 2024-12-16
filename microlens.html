@@ -772,158 +772,15 @@
       </div>
     </main>
 
-
-    
-    <style>
-        /* Mobile App Demo Section */
-        .mobile-app-demo {
-            text-align: center;
-            color: #fff;
-            padding: 4rem 2rem;
-            margin-top: 15vh;
-        }
-        
-        .mobile-app-demo .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .mobile-app-demo.reverse .container {
-            flex-direction: column;
-        }
-        
-        @media (min-width: 768px) {
-            .mobile-app-demo .container {
-                flex-direction: row;
-                align-items: flex-start;
-            }
-            .mobile-app-demo.reverse .container {
-                flex-direction: row-reverse;
-                align-items: flex-start;
-            }
-            .mobile-app-demo .text-content {
-                margin-left: 8rem; /* Increased horizontal space on desktop */
-            }
-            .mobile-app-demo.reverse .text-content {
-                margin-left: 0;
-                margin-right: 8rem; /* Increased horizontal space on desktop for reversed section */
-            }
-        }
-        
-        .image-stack-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            width: 100%;
-            max-width: 300px;
-            height: 500px;
-        }
-        
-        .image-stack {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            height: 100%;
-            overflow: visible;
-            perspective: 800px;
-            position: relative;
-            cursor: grab;
-        }
-        
-        .app-image {
-            width: 100%;
-            height: auto;
-            border-radius: 1rem;
-            position: absolute;
-            left: 0;
-            top: 0;
-            transition: all 0.3s cubic-bezier(0.215, 0.610, 0.355, 1.000);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-            backface-visibility: hidden; /* improve performance */
-        }
-        
-        .app-image:first-child {
-            z-index: 3;
-            animation: subtle-tug 3s ease-in-out infinite;
-            transform: translateY(0) scale(1) rotateY(0deg);
-            filter: blur(0px);
-        }
-        
-        .app-image:nth-child(2) {
-            z-index: 2;
-            transform: translateY(20px) scale(0.95) rotateY(5deg);
-            filter: blur(2px);
-        }
-        
-        .app-image:nth-child(3) {
-            z-index: 1;
-            transform: translateY(40px) scale(0.9) rotateY(10deg);
-            filter: blur(4px);
-        }
-        
-        /* Subtler Tug Animation */
-        @keyframes subtle-tug {
-          0%, 100% {
-              transform: translateX(0) translateY(0) scale(1) rotateY(0deg);
-          }
-          50% {
-              transform: translateX(-5px) translateY(0) scale(1.005) rotateY(-1deg);
-          }
-        }
-        
-        .text-content {
-            text-align: left;
-            padding-top: 2rem;
-        }
-        
-        .text-content h2 {
-            text-shadow: 0px 0px 2px rgba(0,0,0,0.5);
-            font-size: 2rem;
-        }
-        
-        .text-content p {
-            line-height: 1.7;
-        }
-        
-        /* Ensure images are responsive on mobile */
-        @media (max-width: 767px) {
-            .image-stack-container {
-                max-width: 250px;
-                height: 400px;
-            }
-            .app-image {
-                max-width: 100%;
-            }
-            .text-content {
-                text-align: center;
-                margin-top: 2rem;
-                padding: 0 1rem;
-                margin-left: 0 !important; /* Override desktop margin on mobile */
-                margin-right: 0 !important; /* Override desktop margin on mobile for reversed section */
-            }
-            .text-content a {
-                display: inline-block;
-                margin: 0 auto;
-            }
-        }
-    </style>
-</head>
-<body>
-
     <!-- First Section: Images on Left -->
     <section class="mobile-app-demo fade-in-element">
         <div class="container flex justify-center items-center">
             <div class="image-stack-container relative">
                 <div class="image-stack">
-                    <img src="images/microlens1.png" alt="App Screen 1" class="app-image" draggable="true" />
-                    <img src="images/microlens2.png" alt="App Screen 2" class="app-image" draggable="true" />
-                    <img src="images/microlens3.png" alt="App Screen 3" class="app-image" draggable="true" />
-                    <img src="images/microlens4.png" alt="App Screen 3" class="app-image" draggable="true" />
+                    <img src="images/microlens1.png" alt="App Screen 1" class="app-image" draggable="false" />
+                    <img src="images/microlens2.png" alt="App Screen 2" class="app-image" draggable="false" />
+                    <img src="images/microlens3.png" alt="App Screen 3" class="app-image" draggable="false" />
+                    <img src="images/microlens4.png" alt="App Screen 3" class="app-image" draggable="false" />
                 </div>
             </div>
             <div class="text-content w-full md:w-2/5 mt-8 md:mt-0">
@@ -931,14 +788,243 @@
                     Experience the Power of MicroLens on Your Phone
                 </h2>
                 <p class="text-gray-300 mb-6">
-                    View cells at a microscopic scale with the power of our AI analysis. Understand the world in a completely new way, all from the palm of your hand! Install the mobile app today!
+                    View cells at a microscopic scale with the power of our AI analysis. Understand the world in a completely new way, all from the palm of your hand!
                 </p>
                 <a href="microlens-redirect_1" class="button button-blue mind-blow-hover inline-block">
                     Try it for Free on the App →
                 </a>
             </div>
         </div>
+        
     </section>
+
+    <style>
+           /* Mobile App Demo Section */
+.mobile-app-demo {
+   text-align: center;
+   color: #fff;
+   padding: 4rem 4rem;
+   margin-top: 15vh;
+}
+
+.mobile-app-demo .container {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   max-width: 1200px;
+   margin: 0 auto;
+}
+
+.mobile-app-demo.reverse .container {
+   flex-direction: column;
+}
+
+@media (min-width: 768px) {
+   .mobile-app-demo .container {
+       flex-direction: row;
+       align-items: flex-start;
+   }
+   .mobile-app-demo.reverse .container {
+       flex-direction: row-reverse;
+       align-items: flex-start;
+   }
+   .mobile-app-demo .text-content {
+       margin-left: 8rem; /* Increased horizontal space on desktop */
+   }
+   .mobile-app-demo.reverse .text-content {
+       margin-left: 0;
+       margin-right: 8rem; /* Increased horizontal space on desktop for reversed section */
+   }
+}
+
+/* Image container */
+.image-stack-container {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   position: relative;
+   width: 100%;
+   max-width: 300px;
+   height: 500px;
+   
+}
+
+.image-stack {
+   display: flex;
+   flex-direction: column;
+   width: 100%;
+   height: 100%;
+   overflow: visible;
+   perspective: 800px;
+   position: relative;
+   cursor: grab;
+}
+.app-image {
+   width: 100%;
+    height: auto;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-radius: 1rem;
+    transition: all 0.3s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    backface-visibility: hidden;
+    background-clip: padding-box; /* important, keeps border within bounds */
+}
+
+.app-image:before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  bottom: -4px;
+  left: -4px;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(to right, #D6BCFA, #9F7AEA, #B794F4, #D6BCFA); /* Updated lavender gradient */
+  background-size: 200% 200%; /* Larger gradient */
+  animation: gradient-border 5s linear infinite;
+  transition: all 0.3s ease;
+  filter: blur(1px);
+}
+
+.app-image:hover:before {
+   filter: blur(0px);
+   box-shadow: 0 0 20px rgba(159, 122, 234, 0.8);
+}
+
+@keyframes gradient-border {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+   100% {
+    background-position: 0% 50%;
+  }
+}
+
+.app-image:first-child {
+   z-index: 3;
+   animation: subtle-tug 3s ease-in-out infinite;
+   transform: translateY(0) scale(1) rotateY(0deg);
+   filter: blur(0px);
+}
+
+.app-image:nth-child(2) {
+   z-index: 2;
+   transform: translateY(20px) scale(0.95) rotateY(5deg);
+   filter: blur(2px);
+}
+
+.app-image:nth-child(3) {
+   z-index: 1;
+   transform: translateY(40px) scale(0.9) rotateY(10deg);
+   filter: blur(4px);
+}
+
+/* Subtler Tug Animation */
+@keyframes subtle-tug {
+ 0%, 100% {
+     transform: translateX(0) translateY(0) scale(1) rotateY(0deg);
+ }
+ 50% {
+     transform: translateX(-5px) translateY(0) scale(1.005) rotateY(-1deg);
+ }
+}
+
+.text-content {
+   text-align: left;
+   padding-top: 2rem;
+}
+
+.text-content h2 {
+   text-shadow: 0px 0px 2px rgba(0,0,0,0.5);
+   font-size: 2rem;
+}
+
+.text-content p {
+   line-height: 1.7;
+}
+
+/* Ensure images are responsive on mobile */
+@media (max-width: 767px) {
+    .mobile-app-demo {
+        margin-top: 5vh;
+    }
+   .image-stack-container {
+       max-width: 100%;
+       height: auto;
+   }
+    .image-stack {
+       display: flex;
+       flex-direction: row;
+       overflow-x: auto;
+        height: auto;
+       overflow-y: hidden;
+    }
+
+   .app-image {
+       width: 80vw; /* or max width of container div, and leave height auto */
+       max-height: 70vw;
+       position: relative;
+        margin: 0;
+       display: inline-block;
+       top: auto;
+       left: auto;
+       transform: none !important;
+       filter: none !important;
+       box-shadow: none !important;
+       border-radius: 1rem;
+      background-clip: padding-box;
+   }
+     .app-image:before {
+      content: '';
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    bottom: -4px;
+    left: -4px;
+    z-index: -1;
+    border-radius: inherit;
+    background: linear-gradient(to right, #D6BCFA, #9F7AEA, #B794F4, #D6BCFA); /* Updated lavender gradient */
+    background-size: 200% 200%; /* Larger gradient */
+      animation: gradient-border 5s linear infinite;
+      transition: all 0.3s ease;
+       filter: blur(1px);
+}
+
+.app-image:hover:before {
+   filter: blur(0px);
+   box-shadow: 0 0 20px rgba(159, 122, 234, 0.8);
+}
+
+    
+   .app-image:first-child {
+        transform: none !important;
+    }
+    .app-image:nth-child(2) {
+         transform: none !important;
+    }
+    .app-image:nth-child(3) {
+        transform: none !important;
+    }
+    
+    .text-content {
+       text-align: center;
+       margin-top: 8vh;
+       padding: 0 1rem;
+       margin-left: 0 !important; /* Override desktop margin on mobile */
+       margin-right: 0 !important; /* Override desktop margin on mobile for reversed section */
+   }
+   .text-content a {
+       display: inline-block;
+       margin: 0 auto;
+   }
+}
+    </style>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -948,8 +1034,11 @@
                 let images = Array.from(section.querySelectorAll('.app-image'));
                 const imageStack = section.querySelector('.image-stack');
                 let isDragging = false;
-                let startX;
-                let currentImage;
+                let startX = 0;
+                let currentImage = null;
+                let flingVelocity = 0;
+                const FLING_FACTOR = 0.5; // Adjust this value for stronger/weaker fling
+                let lastX = 0;
         
                 function applyInitialStyles() {
                     images.forEach((img, index) => {
@@ -985,7 +1074,8 @@
                 imageStack.addEventListener('touchstart', dragStart, {passive: true});
                 imageStack.addEventListener('touchmove', dragging, {passive: true});
                 imageStack.addEventListener('touchend', dragEnd, {passive: true});
-        
+                imageStack.addEventListener('touchcancel', dragEnd, {passive: true});
+                
                 function getClientX(e) {
                     if (e.type.includes('touch')) {
                         return e.touches[0] ? e.touches[0].clientX : (e.changedTouches[0] ? e.changedTouches[0].clientX : 0);
@@ -993,50 +1083,63 @@
                         return e.clientX;
                     }
                 }
-        
+                
                 function dragStart(e) {
                     const target = e.target;
-                    if (!target.classList.contains('app-image')) return;
-                    if (target !== images[0]) {
-                        // Only top image can be dragged
-                        return;
+                    if (!target.classList.contains('app-image') || target !== images[0]) {
+                        return; // Only top image can be dragged
                     }
-                    isDragging = true;
-                    startX = getClientX(e);
-                    currentImage = target;
-                    currentImage.style.transition = 'none';
-                }
         
-                function dragging(e) {
+                   isDragging = true;
+                   startX = getClientX(e);
+                    currentImage = target;
+                    currentImage.style.transition = 'none'; // Disable transitions while dragging
+                    lastX = startX;
+                }
+
+        
+               function dragging(e) {
                     if (!isDragging || !currentImage) return;
-                    const diff = getClientX(e) - startX;
+
+                    const currentX = getClientX(e);
+                    const diff = currentX - startX;
                     let rotateY = (diff > 0) ? 15 : -15;
+
+
                     currentImage.style.transform = `translateX(${diff}px) rotateY(${rotateY}deg)`;
                     currentImage.style.opacity = `${1 - Math.min(Math.abs(diff) / 500, 1)}`;
+
+
+                    flingVelocity = currentX - lastX;
+                    lastX = currentX;
                 }
-        
+            
                 function dragEnd(e) {
-                    if (!isDragging || !currentImage) return;
-                    isDragging = false;
-                    const diff = getClientX(e) - startX;
+                if (!isDragging || !currentImage) return;
+
+                isDragging = false;
+                const diff = getClientX(e) - startX;
+                currentImage.style.transition = '';
         
-                    currentImage.style.transition = '';
-                    if (Math.abs(diff) > 100) {
-                        // Swipe threshold met, cycle images
-                        const direction = diff > 0 ? 2000 : -2000; 
-                        currentImage.style.transform = `translateX(${direction}px) rotateY(${direction > 0 ? 15 : -15}deg)`;
-                        currentImage.style.opacity = '0';
-        
-                        currentImage.addEventListener('transitionend', function handleTransitionEnd() {
-                            currentImage.removeEventListener('transitionend', handleTransitionEnd);
-                            cycleImages();
-                        });
-                    } else {
-                        // Reset if not swiped enough
-                        currentImage.style.transform = `translateX(0px) rotateY(0deg)`;
-                        currentImage.style.opacity = '1';
-                    }
+                if (Math.abs(diff) > 100 || Math.abs(flingVelocity) > 15) {
+
+                    const direction = diff > 0 ? 2000 : -2000;
+                    const calculatedFling = flingVelocity * FLING_FACTOR;
+                    const flingDistance = Math.abs(calculatedFling) > 1000 ? (calculatedFling > 0 ? 2000 : -2000) : calculatedFling;
+                    const adjustedDirection = Math.abs(diff) > 100 ? direction : flingDistance
+                    currentImage.style.transform = `translateX(${adjustedDirection}px) rotateY(${adjustedDirection > 0 ? 15 : -15}deg)`;
+                    currentImage.style.opacity = '0';
+            
+                    currentImage.addEventListener('transitionend', function handleTransitionEnd() {
+                        currentImage.removeEventListener('transitionend', handleTransitionEnd);
+                        cycleImages();
+                    });
+                } else {
+                    // Reset if not swiped enough
+                    currentImage.style.transform = `translateX(0px) rotateY(0deg)`;
+                    currentImage.style.opacity = '1';
                 }
+            }
         
                 function cycleImages() {
                     const topImage = images.shift();
@@ -1047,6 +1150,7 @@
             });
         });
     </script>
+
 
     <!-- Demo Header -->
     <section class="fade-in-element" style="padding: 4rem 2rem; text-align: center; margin-top: 15vh">
