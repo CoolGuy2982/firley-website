@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microscope World Explorer Kit Store Page</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+    <style>
+        /* Reset margin and padding for body */
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            box-sizing: border-box;
+            overflow-x: hidden;
+            /* Prevent horizontal scrolling */
+            background-color: black;
+            /* Set the background color */
+            color: #ffffff;
+            /* Optional: set text color to white for better contrast */
+        }
+
+        /* Ensure the container takes the full width and adjusts for mobile */
+        .container {
+            max-width: 100vw;
+            /* Prevents overflow */
+            margin: 0 auto;
+            padding-top: 50px;
+            /* Add space for the back arrow and some margin */
+        }
+
+        /* Back arrow styling */
+        .back-arrow {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: black;
+            font-size: 16px;
+            text-decoration: none;
+            color: #f4f4f4;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            max-width: 100vw;
+            /*border-bottom: 1px solid #ddd;*/
+            z-index: 10;
+        }
+
+        .back-arrow svg {
+            margin-right: 10px;
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Store container */
+        #my-store-89634119 {
+            width: 100%;
+            margin-top: 10px;
+            /* You can keep this or remove it */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Ensure no horizontal scrolling */
+        iframe {
+            max-width: 100%;
+        }
+
+        /* Add some padding and spacing for larger screens */
+        @media (min-width: 768px) {
+            #my-store-89634119 {
+                padding: 40px;
+            }
+
+            .back-arrow {
+                font-size: 18px;
+            }
+        }
+
+        /* Product images container */
+        .product-images {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .product-images img {
+            max-width: 100%;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Back arrow to navigate to home -->
+        <a href="/" class="back-arrow">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to Home
+        </a>
+
+        <!-- Updated Ecwid store embed -->
+        <div id="my-store-89634119"></div>
+
+        <!-- Product Images -->
+        <div class="product-images">
+            <img id="main-product-image" src="image1.png" alt="Microscopic World Explorer Kit">
+        </div>
+
+        <!-- Array of images for cycling -->
+        <script>
+            const images = [
+                "image1.png",
+                "image2.png",
+                "image3.png"
+            ];
+            let currentIndex = 0;
+
+            const mainImage = document.getElementById('main-product-image');
+
+            // Function to display the current image
+            function updateImage(index) {
+                if (index >= 0 && index < images.length) {
+                    mainImage.src = images[index];
+                    currentIndex = index;
+                }
+            }
+
+            // Event listener for arrow keys
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'ArrowRight') {
+                    updateImage((currentIndex + 1) % images.length); // Next image
+                } else if (event.key === 'ArrowLeft') {
+                    updateImage((currentIndex - 1 + images.length) % images.length); // Previous image
+                }
+            });
+
+            // Add click event to the main image to focus on it
+            mainImage.addEventListener('click', function () {
+                mainImage.focus();
+            });
+        </script>
+
+        <div>
+            <script data-cfasync="false" type="text/javascript"
+                src="https://app.ecwid.com/script.js?89634119&data_platform=code&data_date=2024-10-19" charset="utf-8"></script>
+            <script type="text/javascript">
+                window.ec = window.ec || {};
+                window.ec.storefront = window.ec.storefront || {};
+                window.ec.storefront.enable_navigation = true;
+                window.ec.storefront.product_details_layout = "TWO_COLUMNS_SIDEBAR_ON_THE_RIGHT";
+                window.ec.storefront.product_details_gallery_layout = "SINGLE_IMAGE";
+                window.ec.storefront.product_details_two_columns_with_right_sidebar_show_product_description_on_sidebar = false;
+                window.ec.storefront.product_details_two_columns_with_left_sidebar_show_product_description_on_sidebar = false;
+                window.ec.storefront.product_details_show_product_name = true;
+                window.ec.storefront.product_details_show_breadcrumbs = false;
+                window.ec.storefront.product_details_show_product_sku = false;
+                window.ec.storefront.product_details_show_product_price = true;
+                window.ec.storefront.product_details_show_in_stock_label = false;
+                window.ec.storefront.product_details_show_number_of_items_in_stock = false;
+                window.ec.storefront.product_details_show_qty = true;
+                window.ec.storefront.product_details_show_wholesale_prices = false;
+                window.ec.storefront.product_details_show_product_options = true;
+                window.ec.storefront.product_details_show_product_description = true;
+                window.ec.storefront.product_details_show_delivery_time = undefined;
+                window.ec.storefront.product_details_show_share_buttons = false;
+                window.ec.storefront.product_details_position_product_name = 100;
+                window.ec.storefront.product_details_position_breadcrumbs = 200;
+                window.ec.storefront.product_details_position_product_sku = 300;
+                window.ec.storefront.product_details_position_product_price = 400;
+                window.ec.storefront.product_details_position_product_options = undefined;
+                window.ec.storefront.product_details_position_buy_button = 600;
+                window.ec.storefront.product_details_position_wholesale_prices = 700;
+                window.ec.storefront.product_details_position_product_description = 800;
+                window.ec.storefront.product_details_position_delivery_time = undefined;
+                window.ec.storefront.product_details_position_share_buttons = 900;
+                window.ec.storefront.product_details_position_subtitle = 500;
+                window.ec.storefront.product_details_show_subtitle = true;
+                xProductBrowser("categoriesPerRow=3", "views=grid(20,3) list(60) table(60)", "categoryView=grid",
+                    "searchView=list", "defaultProductId=702542722", "defaultSlug=microscopic-world-explorer-kit",
+                    "id=my-store-89634119");
+            </script>
+        </div>
+    </div>
+
+</body>
+
+</html>
