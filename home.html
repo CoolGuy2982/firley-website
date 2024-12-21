@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,14 +46,10 @@
     body {
         font-family: 'Google Sans', sans-serif;
         overflow-x: hidden;
+        background-color: #000;
     }
 
-    .custom-bg {
-        background: radial-gradient(circle at 55% -30%, #2E1A47 10%, #000 50%);
-        min-height: 20vh;
-        width: 100%;
-        color: #fff;
-    }
+
 
     /* Navbar Styles */
         .navbar {
@@ -155,8 +152,21 @@
 
 /* Hero Section Responsive Styles */
 .hero-section {
-    padding: 10vh 1rem;
+    background: radial-gradient(circle at 55% -30%, rgba(94, 39, 120, 1) 10%, rgba(32, 18, 44, 1) 50%, rgb(0, 0, 0) 80%);
+    animation: gradient-move 6s infinite alternate ease-in-out;
 }
+@keyframes gradient-move {
+    0% {
+        background-position: 55% -30%;
+    }
+    50% {
+        background-position: 60% -25%;
+    }
+    100% {
+        background-position: 50% -35%;
+    }
+}
+
 
 .hero-section .title {
     font-size: 3rem; /* Reduced font size for mobile */
@@ -743,10 +753,10 @@
     }
 </style>
 
-<body class="custom-bg">
+<body  class="custom-bg">
 
     <!--Navbar-->
-    <header class="navbar flex justify-between items-center px-6 py-4 md:px-12 fade-in-element">
+    <header class="navbar flex justify-between items-center px-6 py-4 md:px-12 fade-in-element custom-bg">
         <!-- Logo and Brand Name -->
         <a href="#" class="flex items-center space-x-4">
             <img
@@ -1614,3 +1624,4 @@
 </body>
 
 </html>
+
