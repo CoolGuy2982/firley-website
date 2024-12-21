@@ -1181,12 +1181,13 @@
             State of the Art Cell Segmentation Algorithm
         </h2>
         <p style="font-size: 1rem; font-weight: 400; line-height: 1.75; color: #a1a1a1; max-width: 800px; margin: 0 auto;">
-            Our cutting-edge algorithm offers unparalleled cell segmentation, delivering real-time precision for identifying cellular structures. Unlock new possibilities in research, education, and discovery with our AI microscope companion. Click on the demos below showcasing advanced insights.
+            Our cutting-edge algorithm offers unparalleled cell segmentation, delivering real-time precision for identifying cellular structures. Unlock new possibilities in research, education, and discovery with our AI microscope companion. CLICK THE CARDS FOR A COOL DEMO OF OUR ALGO!!!!
         </p>
     </section>
 
     <!-- Full-Screen Centered Three-Card Carousel Section -->
     <section class="fade-in-element" id="three-card-carousel">
+        
         <!-- Swiper CSS -->
         <link
             rel="stylesheet"
@@ -1223,37 +1224,6 @@
             <div class="swiper-button-prev"></div>
             <!-- Pagination Dots -->
             <div class="swiper-pagination"></div>
-        </div>
-    
-        <!-- Modal for Interaction -->
-        <div id="modal" class="modal">
-            <!-- Close Button -->
-            <div class="close-button" onclick="closeModal()">
-                &times;
-            </div>
-            <div class="modal-content">
-                <!-- Modal Body -->
-                <div class="modal-body">
-                    <!-- Image Section -->
-                    <div class="modal-image-container">
-                        <img id="modal-image" src="" alt="Segmented Image" class="modal-image">
-                    </div>
-                    <!-- Cards Section -->
-                    <div class="cards-section">
-                        <!-- Loading Overlay -->
-                        <div class="loading-overlay" id="loadingOverlay">
-                            <div class="loading-card">
-                                <!-- Shimmer effect -->
-                                <div class="shimmer"></div>
-                            </div>
-                        </div>
-                        <!-- Cards Container -->
-                        <div class="cards-container" id="cardsContainer">
-                            <!-- Cards will be generated dynamically -->
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     
         <!-- Swiper JS -->
@@ -1450,7 +1420,7 @@
                 .modal {
                     display: none;
                     position: fixed;
-                    z-index: 1000;
+                    z-index: 9999;
                     left: 0;
                     top: 0;
                     width: 100%;
@@ -1929,7 +1899,37 @@
         
             </script>
         </section> 
-
+         <!-- Modal for Interaction -->
+         <div id="modal" class="modal">
+            <!-- Close Button -->
+            <div class="close-button" onclick="closeModal()">
+                &times;
+            </div>
+            <div class="modal-content">
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <!-- Image Section -->
+                    <div class="modal-image-container">
+                        <img id="modal-image" src="" alt="Segmented Image" class="modal-image">
+                    </div>
+                    <!-- Cards Section -->
+                    <div class="cards-section">
+                        <!-- Loading Overlay -->
+                        <div class="loading-overlay" id="loadingOverlay">
+                            <div class="loading-card">
+                                <!-- Shimmer effect -->
+                                <div class="shimmer"></div>
+                            </div>
+                        </div>
+                        <!-- Cards Container -->
+                        <div class="cards-container" id="cardsContainer">
+                            <!-- Cards will be generated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
     <!-- Small smaller-->
 <section class="fade-in-element" style="padding: 4rem 2rem; text-align: center; margin-top: 15vh;">
     <h2 style="font-size: 2rem; font-weight: 500; margin-bottom: 1rem; color: #fff;">One Platform, Endless Possibilities</h2>
