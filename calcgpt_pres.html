@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CalcGPT Pitch Deck</title>
+    <style>
+        /* Reset and Basic Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden; /* Prevent scrolling the whole page */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            line-height: 1.6;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a1d 0%, #2b2b30 100%); /* Subtle gradient background */
+            color: #f0f0f5; /* Light text */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1200px; /* For potential 3D effects */
+        }
+
+        /* Presentation Container */
+        #presentation {
+            width: 95%;
+            height: 95%;
+            max-width: 1200px; /* Adjust as needed */
+            max-height: 700px; /* Adjust as needed */
+            position: relative;
+            border: 1px solid #444;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            background-color: rgba(37, 37, 41, 0.9); /* Slightly transparent dark */
+            backdrop-filter: blur(5px); /* Frosted glass effect */
+            overflow: hidden; /* Hide non-active slides */
+            border-radius: 12px; /* Softer corners */
+        }
+
+        /* Slide Styles */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 50px 70px; /* Generous padding */
+            display: flex; /* Use flexbox for layout */
+            flex-direction: column; /* Stack content vertically */
+            justify-content: center; /* Center content vertically */
+            align-items: flex-start; /* Align content block to the left */
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(50px) rotateY(-5deg); /* Start slightly off-screen and rotated */
+            transition: opacity 0.6s ease-out, visibility 0.6s, transform 0.6s ease-out;
+            text-align: left; /* Ensure text is left-aligned */
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0) rotateY(0); /* Bring slide into view */
+            z-index: 1;
+        }
+
+        /* Previous slide transition */
+         .slide.exiting-next {
+            opacity: 0;
+            transform: translateX(-50px) rotateY(5deg);
+            z-index: 0;
+         }
+         /* Next slide transition */
+         .slide.exiting-prev {
+            opacity: 0;
+            transform: translateX(50px) rotateY(-5deg);
+            z-index: 0;
+         }
+
+
+        .slide .content-wrapper {
+             max-width: 90%; /* Control width of the left-aligned block */
+             width: 100%;
+        }
+
+        /* Slide Content Elements */
+        .slide h1, .slide h2 {
+            color: #a29bfe; /* Vibrant Purple */
+            margin-bottom: 25px;
+            font-size: calc(1.8em + 1.5vw); /* Responsive font size */
+            font-weight: 600;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        .slide h2 {
+             font-size: calc(1.5em + 1.2vw); /* Slightly smaller */
+             margin-bottom: 20px;
+             color: #8ecae6; /* Accent Blue */
+        }
+
+        .slide p, .slide li {
+            font-size: calc(0.9em + 0.4vw); /* Responsive readable text */
+            margin-bottom: 15px;
+            color: #e0e0e5;
+            max-width: 750px; /* Limit line length for readability */
+        }
+
+        .slide ul {
+            list-style: none; /* Remove default bullets */
+            padding-left: 0;
+            margin-bottom: 20px;
+        }
+
+         .slide li {
+            margin-bottom: 12px;
+            padding-left: 25px; /* Space for custom bullet */
+            position: relative;
+         }
+         /* Custom bullet points */
+         .slide li::before {
+            content: '>'; /* Use '>' or other character */
+            position: absolute;
+            left: 0;
+            top: 1px;
+            color: #a29bfe; /* Purple accent */
+            font-weight: bold;
+            font-size: 1.1em;
+         }
+
+        .slide strong {
+            color: #fff; /* Brighter highlight */
+            font-weight: 600;
+        }
+
+        .slide a {
+            color: #8ecae6; /* Link color (Blue) */
+            text-decoration: none;
+            border-bottom: 1px dashed #8ecae6;
+            transition: color 0.3s ease, border-bottom-color 0.3s ease;
+        }
+
+        .slide a:hover {
+            color: #ade8f4;
+            border-bottom-color: #ade8f4;
+        }
+
+        .slide img {
+            max-width: 65%; /* Default image size */
+            height: auto;
+            display: block;
+            margin: 30px 0; /* Margin top/bottom, align left */
+            border-radius: 6px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            background-color: #f0f0f5; /* Add light background for contrast if needed */
+            padding: 4px; /* Tiny border effect */
+        }
+
+        /* Specific image size/layout adjustments */
+        .slide .google-trends-img {
+            max-width: 80%; /* Make trends image wider */
+        }
+        .slide .willingness-img {
+             max-width: 55%; /* Smaller for graph */
+        }
+
+        .slide iframe {
+            width: 100%; /* Responsive width */
+            max-width: 640px; /* Slightly smaller max video width */
+            height: 360px; /* Maintain 16:9 aspect ratio */
+            display: block;
+            margin: 30px 0; /* Margin top/bottom, align left */
+            border: none;
+            border-radius: 6px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Title Slide Specific */
+        .title-slide {
+            align-items: center; /* Center title slide content horizontally */
+            text-align: center; /* Center text */
+        }
+        .title-slide .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Ensure content wrapper content is centered */
+        }
+        .title-slide h1 {
+             font-size: calc(2.5em + 2vw); /* Larger title */
+             color: #fff; /* White title */
+             margin-bottom: 15px;
+        }
+         .title-slide p {
+            font-size: calc(1em + 0.6vw);
+            color: #ccc;
+            max-width: 80%; /* Limit subtitle width */
+         }
+         .title-slide .founder-name {
+             margin-top: 30px;
+             font-size: calc(0.9em + 0.3vw);
+             color: #aaa;
+         }
+
+        /* Highlight / Key Numbers */
+        .highlight {
+            font-size: calc(1.5em + 0.8vw);
+            color: #a29bfe; /* Purple */
+            font-weight: bold;
+            display: inline-block; /* Keep in flow */
+            margin: 0 5px;
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Navigation */
+        .navigation {
+            position: absolute;
+            bottom: 20px;
+            right: 25px;
+            z-index: 10;
+        }
+
+        .navigation button {
+            padding: 10px 18px;
+            margin-left: 12px;
+            background-color: #a29bfe;
+            color: white;
+            border: none;
+            border-radius: 20px; /* Pill shape */
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .navigation button:hover {
+            background-color: #b1a7fc;
+            transform: translateY(-2px); /* Slight lift */
+        }
+        .navigation button:active {
+             transform: translateY(0px); /* Push down */
+        }
+         .navigation button:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+         }
+
+        /* Progress Bar */
+        #progress-container {
+             position: absolute;
+             bottom: 0;
+             left: 0;
+             width: 100%;
+             height: 6px;
+             background-color: rgba(0,0,0,0.2); /* Track */
+             z-index: 5;
+        }
+        #progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #8ecae6 0%, #a29bfe 100%); /* Gradient progress */
+            width: 0%; /* Initial width */
+            transition: width 0.4s ease-out;
+            border-radius: 0 3px 3px 0;
+        }
+
+        /* Simple Content Animation */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide.active h2,
+        .slide.active p,
+        .slide.active ul,
+        .slide.active img,
+        .slide.active iframe {
+             animation: fadeInUp 0.5s ease-out 0.3s forwards; /* Staggered entry */
+             opacity: 0; /* Start hidden */
+        }
+        .slide.active h2 { animation-delay: 0.2s; }
+        .slide.active p, .slide.active li { animation-delay: 0.4s; }
+        .slide.active img, .slide.active iframe { animation-delay: 0.5s; }
+
+
+    </style>
+</head>
+<body>
+    <div id="presentation">
+        <div id="progress-container"><div id="progress-bar"></div></div>
+
+        <!-- Slide 1: Title -->
+        <section class="slide title-slide active">
+             <div class="content-wrapper">
+                <h1>Introducing CalcGPT</h1>
+                <p>The AI Tutor Built for AP Calculus Success</p>
+                <p class="founder-name">By Omkar Mamidpalliwar</p>
+            </div>
+        </section>
+
+        <!-- Slide 2: The Problem -->
+        <section class="slide">
+             <div class="content-wrapper">
+                <h2>The AP Calculus Struggle is Real</h2>
+                <ul>
+                    <li>Late nights, confusing homework, no clear help.</li>
+                    <li>Expensive Tutors ($50+/hr).</li>
+                    <li>Generic AI (ChatGPT) = Math Errors!</li>
+                    <li>YouTube: Too much noise, hard to find specifics.</li>
+                </ul>
+                <p><strong>Students need affordable, accurate, targeted help.</strong></p>
+            </div>
+        </section>
+
+        <!-- Slide 3: Introducing CalcGPT (Solution) -->
+        <section class="slide">
+            <div class="content-wrapper">
+                <h2>Meet CalcGPT: Your Calc Co-Pilot</h2>
+                <p>Built by a student, for students. Focused *only* on Calculus.</p>
+                 <ul>
+                    <li><strong>Accurate Math Engine:</strong> Finally, AI that gets calculations right.</li>
+                    <li><strong>Interactive Tools:</strong> Desmos graphing, whiteboard analysis, PDF understanding.</li>
+                    <li><strong>Guided Learning:</strong> Doesn't just give answers, helps you understand.</li>
+                    <li><strong>Engaging Practice:</strong> Custom games & animations.</li>
+                 </ul>
+                 <p>Try it: <a href="https://calcgpt.ai" target="_blank">calcgpt.ai</a></p>
+             </div>
+        </section>
+
+        <!-- Slide 4: Live Demo / Key Features -->
+        <section class="slide">
+             <div class="content-wrapper">
+                <h2>See CalcGPT in Action</h2>
+                <p>Let's quickly see *how* it solves the struggle:</p>
+                <!-- === ACTION REQUIRED: Replace VIDEO_ID_HERE with your actual YouTube video ID === -->
+                <!-- Example: If your video URL is https://www.youtube.com/watch?v=dQw4w9WgXcQ, the ID is dQw4w9WgXcQ -->
+                <iframe src="https://www.youtube.com/embed/blnM5xwqhAs" title="CalcGPT Demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <p><em>Math Accuracy, Graphing, Whiteboard, TI-84, Games, Practice Test</em></p>
+            </div>
+        </section>
+
+        <!-- Slide 5: Marketability - The Need is Clear -->
+        <section class="slide">
+            <div class="content-wrapper">
+                <h2>Marketability: Students Need This</h2>
+                <!-- === ACTION REQUIRED: Replace 'google_trends_image.png' with the ACTUAL path/URL to your trends image === -->
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczOsOmyeQgJgFVXXY_-HPVS0uZAMvHvcOryk0RNYDMnhdurGSYXpPIJ4t8k11JdgcI9IfEun4YCVo58BEnC2qPIx-3fzkaSLewi2Bdqr43VTopUhulAc1s9sa6HVayrYLpuw2tneePIfDP4cbeuDWGgrHw=w1301-h761-s-no-gm?authuser=0" alt="Google Trends showing correlation between AI searches, homework help, and AP exams" class="google-trends-img">
+                 <ul>
+                     <li><strong>Target Market:</strong> AP Calculus students (and later, similar courses).</li>
+                     <li><strong>Key Differentiator:</strong> Unmatched accuracy & calculus-specific features.</li>
+                 </ul>
+            </div>
+        </section>
+
+        <!-- Slide 6: Feasibility & Traction - It's Happening! -->
+        <section class="slide">
+            <div class="content-wrapper">
+                <h2>Feasibility & Early Traction</h2>
+                <p>CalcGPT is live and gaining momentum:</p>
+                <ul>
+                    <li>Product Launched: Available at <a href="https://calcgpt.ai" target="_blank">calcgpt.ai</a></li>
+                    <li>Organic Usage: <strong class="highlight">7,100+</strong> problems solved via word-of-mouth!</li>
+                    <li>Strategic Partnership: Teaming up with DeAP Learning (<strong class="highlight">6,500+</strong> MAU).</li>
+                    <li>Validated Demand: Survey confirms ~<strong class="highlight">900</strong> initial paying users ready.</li>
+                </ul>
+                <p><strong>We've proven it's possible and users want it.</strong></p>
+             </div>
+        </section>
+
+        <!-- Slide 7: Profitability - Making it Sustainable -->
+        <section class="slide">
+            <div class="content-wrapper">
+                <h2>People are willing to pay for CalcGPT</h2>
+                <!-- === ACTION REQUIRED: Replace 'willingness_to_pay_graph.png' with the ACTUAL path/URL to your graph === -->
+                <img src="https://lh3.googleusercontent.com/pw/AP1GczNviGf02yuVCWLbnElpMrFqi0tLb2_Io2xkwTRE3nQsAZohMgcHYv_X9beltJmlatnZC0JWr1kxEe9Y78CLVvufMTxv6w4BM1_wcNUrwbDnahbCaO_yVrAl_lbdJEW0KwUUHOFNo2ATFfwLmud7HxHiiA=w1299-h904-s-no-gm?authuser=0" alt="Graph showing willingness to pay, peaking around $5" class="willingness-img">
+                 <ul>
+                    <li><strong>Affordable Price:</strong> <strong class="highlight">$5/month</strong> hits the sweet spot.</li>
+                    <li><strong>Superior Value:</strong> Beats pricey tutors & inaccurate generic AI.</li>
+                    <li><strong>Initial Revenue:</strong> Leverage DeAP partnership for immediate customer base.</li>
+                 </ul>
+                 <p><strong>This model ensures growth and accessibility.</strong></p>
+            </div>
+        </section>
+
+        <!-- Slide 8: Competitive Advantage - Why We Win -->
+        <section class="slide">
+             <div class="content-wrapper">
+                <h2>The CalcGPT Advantage</h2>
+                 <ul>
+                    <li><strong>Unmatched Accuracy:</strong> Core math engine solves a key AI pain point.</li>
+                    <li><strong>Laser Focus:</strong> Deep understanding of the AP Calculus curriculum.</li>
+                    <li><strong>Unique Interactivity:</strong> Whiteboard, Desmos, PDF, Games - tools others lack.</li>
+                    <li><strong>Cost Effective:</strong> Accessible price point opens the market.</li>
+                    <li><strong>Authentic Solution:</strong> Built from real student experience.</li>
+                 </ul>
+            </div>
+        </section>
+
+        <!-- Slide 9: Future Vision - Beyond AP Calc -->
+        <section class="slide">
+             <div class="content-wrapper">
+                <h2>The Vision: Growing with Students</h2>
+                <p>AP Calculus is the perfect starting point.</p>
+                 <ul>
+                    <li><strong>Phase 1:</strong> Become the #1 AP Calculus AI tool.</li>
+                    <li><strong>Phase 2:</strong> Expand to Pre-Calc, Algebra II, Statistics.</li>
+                    <li><strong>Phase 3:</strong> Explore other complex STEM subjects.</li>
+                 </ul>
+                 <p>Building the essential AI companion for high school math mastery.</p>
+            </div>
+        </section>
+
+        <!-- Slide 10: Conclusion & Call to Action -->
+        <section class="slide">
+             <div class="content-wrapper">
+                <h2>CalcGPT: Ready to Scale</h2>
+                <p>We've built a solution students need and love.</p>
+                <ul>
+                    <li><strong>Viable Idea:</strong> Product works, traction achieved.</li>
+                    <li><strong>Clear Market:</strong> Defined need, strong competitive edge.</li>
+                    <li><strong>Profitable Model:</strong> Affordable pricing, validated demand.</li>
+                 </ul>
+                 <p><strong>Experience the future of calculus help: <a href="https://calcgpt.ai" target="_blank">calcgpt.ai</a></strong></p>
+                 <p style="margin-top: 30px; font-size: 1.5em; color: #a29bfe;"><strong>Thank You. Questions?</strong></p>
+             </div>
+        </section>
+
+        <!-- Navigation Buttons -->
+        <div class="navigation">
+            <button id="prev" aria-label="Previous Slide">Prev</button>
+            <button id="next" aria-label="Next Slide">Next</button>
+        </div>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const nextBtn = document.getElementById('next');
+        const prevBtn = document.getElementById('prev');
+        const progressBar = document.getElementById('progress-bar');
+        let currentSlideIndex = 0;
+        const totalSlides = slides.length;
+
+        function showSlide(index, direction) {
+            // Add exiting class to the current slide
+            if (direction === 'next') {
+                slides[currentSlideIndex].classList.add('exiting-next');
+            } else if (direction === 'prev') {
+                 slides[currentSlideIndex].classList.add('exiting-prev');
+            }
+
+            // Short delay to allow exit animation to start before changing active slide
+            setTimeout(() => {
+                // Remove active and exiting classes from all slides
+                 slides.forEach(slide => {
+                    slide.classList.remove('active', 'exiting-next', 'exiting-prev');
+                 });
+
+                // Update current slide index
+                currentSlideIndex = index;
+
+                // Add active class to the new slide
+                slides[currentSlideIndex].classList.add('active');
+
+                // Update button states
+                prevBtn.disabled = currentSlideIndex === 0;
+                nextBtn.disabled = currentSlideIndex === totalSlides - 1;
+
+                 // Update progress bar
+                const progress = ((currentSlideIndex + 1) / totalSlides) * 100;
+                progressBar.style.width = `${progress}%`;
+
+            }, 50); // Small delay, adjust if needed
+        }
+
+        function nextSlide() {
+            if (currentSlideIndex < totalSlides - 1) {
+                showSlide(currentSlideIndex + 1, 'next');
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlideIndex > 0) {
+                showSlide(currentSlideIndex - 1, 'prev');
+            }
+        }
+
+        // Event Listeners for Buttons
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+
+        // Event Listener for Keyboard Navigation
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowRight' || event.key === ' ') { // Spacebar also advances
+                // Prevent spacebar from scrolling the page if presentation is focused
+                if (document.activeElement === document.body || document.activeElement === nextBtn || document.activeElement === prevBtn) {
+                    event.preventDefault();
+                }
+                nextSlide();
+            } else if (event.key === 'ArrowLeft') {
+                 // Prevent default browser back navigation if presentation is focused
+                 if (document.activeElement === document.body || document.activeElement === nextBtn || document.activeElement === prevBtn) {
+                     event.preventDefault();
+                 }
+                prevSlide();
+            }
+        });
+
+        // Initialize first slide and buttons
+        // Small delay on initial load to allow styles to apply before first transition runs
+        setTimeout(() => {
+             showSlide(0);
+        }, 100);
+
+
+    </script>
+</body>
+</html>
